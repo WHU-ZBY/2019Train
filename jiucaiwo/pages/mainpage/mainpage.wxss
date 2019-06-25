@@ -1,0 +1,2 @@
+/* pages/mainpage/mainpage.wxss */
+@import "../../colorui/animation.wxss";

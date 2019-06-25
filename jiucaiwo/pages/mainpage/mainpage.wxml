@@ -1,0 +1,31 @@
+
+
+<myOption wx:if="{{PageCur=='myOption'}}"></myOption>
+
+
+<view class="cu-bar tabbar bg-gray shadow foot">
+  <view class="action" bindtap="NavChange" data-cur="myOption">
+    <view class='cuIcon-cu-image'>
+      <image src="/images/tabbar/basics{{PageCur=='myOption'?'_cur':''}}.png"></image>
+    </view>
+    <view class="{{PageCur=='basics'?'text-green':'text-gray'}}">元素</view>
+  </view>
+  <view class="action" bindtap="NavChange" data-cur="component">
+    <view class='cuIcon-cu-image'>
+      <image src="/images/tabbar/component{{PageCur=='component'?'_cur':''}}.png"></image>
+    </view>
+    <view class="{{PageCur=='component'?'text-green':'text-gray'}}">组件</view>
+  </view>
+  <view class="action" bindtap="NavChange" data-cur="plugin">
+    <view class='cuIcon-cu-image'>
+      <image src="/images/tabbar/plugin{{PageCur=='plugin'?'_cur':''}}.png"></image>
+    </view>
+    <view class="{{PageCur=='plugin'?'text-green':'text-gray'}}">扩展</view>
+  </view>
+  <view class="action" bindtap="NavChange" data-cur="about">
+    <view class='cuIcon-cu-image'>
+      <image src="/images/tabbar/about{{PageCur=='about'?'_cur':''}}.png"></image>
+    </view>
+    <view class="{{PageCur=='about'?'text-green':'text-gray'}}">关于</view>
+  </view>
+</view>
