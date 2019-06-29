@@ -2231,7 +2231,6 @@ button.icon.lg {
 
 .cu-card>.cu-item {
 	display: block;
-	background-color: var(--white);
 	overflow: hidden;
 	border-radius: 10rpx;
 	margin: 30rpx;

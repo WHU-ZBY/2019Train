@@ -1,8 +1,11 @@
 //app.js
 //app.js
+const Towxml = require('/towxml/main');    //引入towxml库
+
 App({
-  onLaunch: function () {
+  onLaunch: function() {
     // 展示本地存储能力
+
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
@@ -13,7 +16,7 @@ App({
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
       }
     })
-
+     
 
     // 获取用户信息
     wx.getSetting({
@@ -44,7 +47,12 @@ App({
       }
     })
   },
+
+  towxml: new Towxml(),  
+
   globalData: {
-    userInfo: null
+    userInfo: null,
+
+   
   }
 })

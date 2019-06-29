@@ -1,0 +1,23 @@
+/* pages/mainpage/mainpage.wxss */
+@import "../../colorui/animation.wxss";
+page{
+  background-color: #333333;
+
+}
+
+.bottombg{
+  background-color: #2f3640;
+}
+.cardStyle{
+  background-color: #84817a;
+}
+
+.indexnum{
+  margin-top: 10rpx;
+}
+.indexFrame{
+ padding-bottom: 0;
+}
+.carView{
+  margin : 10rpx;
+}

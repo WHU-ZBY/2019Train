@@ -11,3 +11,9 @@
   padding: 200rpx 0;
   box-sizing: border-box;
 } 
+.topbg{
+  background-color: #2f3640;
+}
+ .searchbtn {
+  background-color: #273c75;
+}

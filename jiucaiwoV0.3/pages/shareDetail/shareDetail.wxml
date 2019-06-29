@@ -1,0 +1,59 @@
+<!--pages/mainpage/shareDetail/shareDetail.wxml-->
+
+<view class="box">
+  <view class="cu-bar topBarColor">
+    <view class="action" bindtap='goBackPage'>
+      <text class="cuIcon-back textcolor">返回</text>
+    </view>
+    <view class="content text-bold textcolor">
+      股票详情
+    </view>
+  </view>
+</view>
+<view class="current-info text-align">
+    <view class=" topbg text-white text-align padding-sm margin-xs radius share-name">{{name}}</view>
+  <view class="flex">
+    <view class="flex-treble ">
+
+    <view class=" topbg text-white text-align padding-sm margin-xs radius share-price">{{market=='gb_'?'$':market=='hk'?'HKD':'￥'}}{{price}}</view>
+    </view>
+
+
+      <view class="flex-sub  radius " bindtap='save'>
+       <button class=" round saveBtn" >
+       {{saveBtnContent}}</button>
+      </view>
+  </view>
+
+  </view>
+
+
+<view class="grid col-3 margin-bottom text-white text-center">
+  <view class="text-xxl indexnum">开盘</view>
+  <view class="text-xxl indexnum">最高价</view>
+  <view class="text-xxl indexnum">最小价</view>
+  <view class="indexnum">
+    <view class="text-xl ">
+      {{market=='gb_'?'$':market=='hk'?'HKD':'￥'}} {{kaipan}}
+    </view>
+
+  </view>
+  <view class="indexnum">
+    <view class="text-xl ">
+      {{market=='gb_'?'$':market=='hk'?'HKD':'￥'}} {{max}}
+    </view>
+
+  </view>
+  <view class="indexnum">
+    <view class="text-xl ">
+      {{market=='gb_'?'$':market=='hk'?'HKD':'￥'}} {{min}}
+    </view>
+
+    </view>
+  </view>
+
+  <view class="foreast-info">
+
+    <canvas style="width: 95%; height: 400px;" canvas-id="yueEle" binderror="canvasIdErrorCallback"></canvas>
+
+  </view>

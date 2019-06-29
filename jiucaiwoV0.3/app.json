@@ -3,7 +3,8 @@
     "pages/index/index",
     "pages/logs/logs",
     "pages/mainpage/mainpage",
-    "pages/mainpage/myOption/myOption"
+    "pages/newsPage/newsPage",
+    "pages/shareDetail/shareDetail"
   ],
   "window": {
     "navigationStyle": "custom"

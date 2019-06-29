@@ -1,7 +1,0 @@
-/* pages/mainpage/myOption/myOption.wxss */
-.indexnum{
-  margin-top: 10rpx;
-}
-.indexFrame{
- padding-bottom: 0;
-}

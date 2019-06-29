@@ -1,22 +1,18 @@
-// pages/mainpage/mainpage.js
+// pages/mainpage/myOption/indexItem/indexItem.js
 Page({
-  data: {
-    PageCur: 'myOption'
-  },
-  NavChange(e) {
-    this.setData({
-      PageCur: e.currentTarget.dataset.cur
-    })
-  },
+
   /**
    * 页面的初始数据
    */
+  data: {
+
+  },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    
   },
 
   /**
