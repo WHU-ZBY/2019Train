@@ -37,7 +37,7 @@ page{
   color: white;
   font: bold;
   margin-right: 5px;
-  background-color: #2f3640;
+  background-color:#246bce;
   white-space:nowrap; overflow:hidden; 
   text-overflow:ellipsis;
 }

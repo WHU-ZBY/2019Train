@@ -47,7 +47,8 @@ Page({
         //   console.log(res.data);
         var temp = res.data.split("\"");
         var result = temp[1].split(",");
-        that.data.name = result[0];
+        // that.data.name = result[0];
+        that.data.name = decodeURIComponent(result[0]);
         switch (that.data.market) {
           case "sh":
           case "sz":
@@ -147,11 +148,14 @@ Page({
             'content-type': 'application/json' // 默认值
           },
           success(res) {
+            console.log(res.data)
+            that.data.name = res.data.name;
             for (var temi = 7; temi > 0; temi--) {
               that.data.dayData = that.data.dayData.concat([res.data.data[res.data.data.length - temi]]);
             }
             that.setData({
-              dayData : that.data.dayData
+              dayData : that.data.dayData,
+              name: that.data.name
             })
             console.log(that.data.dayData);
             {
