@@ -4,7 +4,8 @@
     "pages/logs/logs",
     "pages/mainpage/mainpage",
     "pages/newsPage/newsPage",
-    "pages/shareDetail/shareDetail"
+    "pages/shareDetail/shareDetail",
+    "pages/mainpage/myOption/indexItem/indexItem"
   ],
   "window": {
     "navigationStyle": "custom"

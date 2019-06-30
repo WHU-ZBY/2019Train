@@ -32,7 +32,7 @@ Page({
       market: options.market
     })
     this.getShareInf();
-    this.getMothElectro();
+
   },
   getShareInf: function() {
     var that = this;
