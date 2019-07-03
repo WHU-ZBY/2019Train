@@ -10,15 +10,27 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
   //事件处理函数
-  btn_login:function(){
+  btn_login: function() {
+    var that = this;
+    console.log(app.globalData.openid)
+    wx.request({
+      url: 'http://106.15.182.82:8080/registerUser?username='+app.globalData.openid,
+      success(res) {
+        console.log(res.data);      
+      }
+    })
+   
+
+    app.globalData.userInfo = this.data.userInfo;
+
     wx.navigateTo({
       url: '../mainpage/mainpage'
     })
   },
 
-  onLoad: function () {
+  onLoad: function() {
     // wx.request({
-    //   url: 'http://106.15.182.82:8080/test',
+    //   url: 'http://106.15.182.82:8080/registerUser?username=aaaa',
     //   success(res) {
     //     console.log(res.data);
 
@@ -33,7 +45,7 @@ Page({
         hasUserInfo: true
       })
 
-    } else if (this.data.canIUse){
+    } else if (this.data.canIUse) {
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
       app.userInfoReadyCallback = res => {

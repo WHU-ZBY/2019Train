@@ -5,7 +5,9 @@
     "pages/mainpage/mainpage",
     "pages/newsPage/newsPage",
     "pages/shareDetail/shareDetail",
-    "pages/mainpage/myOption/indexItem/indexItem"
+    "pages/mainpage/myOption/indexItem/indexItem",
+    "pages/searchPage/searchPage",
+    "pages/searchPage/shareItem/shareItem"
   ],
   "window": {
     "navigationStyle": "custom"

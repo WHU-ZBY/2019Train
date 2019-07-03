@@ -3,47 +3,12 @@ const app = getApp();
 
 Page({
   data: {
+    inputValue: null,
+    userInfo: null,
     newspage: 1,
     marketName: ["沪深", "港股", "美股"],
     TabCur: 0,
-    indexItems: [{
-        name: "华星创业",
-        num: "300025",
-        price: "-",
-        market: "sz",
-        present: "-",
-        forecast: "-"
-      }, {
-        name: "芬里克斯生物",
-        num: "SPEX",
-        price: "-",
-        market: "gb_",
-        present: "-",
-        forecast: "-"
-      },
-      {
-        name: "建设银行",
-        num: "00939",
-        price: "-",
-        market: "hk",
-        present: "-",
-        forecast: "-"
-      }, {
-        name: "博华太平洋",
-        num: "01076",
-        price: "-",
-        market: "hk",
-        present: "-",
-        forecast: "-"
-      }, {
-        name: "神奇制药",
-        num: "600613",
-        price: "-",
-        market: "sh",
-        present: "-",
-        forecast: "-"
-      }
-    ],
+    indexItems: null,
     ggstockIndexs: [{
       name: "恒生指数",
       num: "hkHSI",
@@ -121,8 +86,17 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    // console.log(app.globalData.openid);
+    // console.log(app.globalData.userInfo);
+   
+
+
+    this.data.userInfo = app.globalData.userInfo;
+    this.setData({
+      userInfo:this.data.userInfo,
+    })
     this.refreshIndex();
-    this.refreshItem();
+  
     this.getNewsTitle();
   },
 
@@ -298,7 +272,7 @@ Page({
     {
       for (var i = 0; i < that.data.indexItems.length; i++) {
         // console.log(app.globalData.hsstockIndexs[i].num),
-        url = url + that.data.indexItems[i].market + that.data.indexItems[i].num + ',';
+        url = url + that.data.indexItems[i].market + that.data.indexItems[i].shareNum + ',';
       }
       url = url.toLowerCase();
       var itemindex = 0;
@@ -405,22 +379,51 @@ Page({
   },
   NavtoShare:function(e){
     wx.navigateTo({
-      url: '../shareDetail/shareDetail?market=' +e.currentTarget.dataset.cur[0]+"&num=" + e.currentTarget.dataset.cur[1],
+      url: '../shareDetail/shareDetail?market=' + e.currentTarget.dataset.cur[0] + "&num=" + e.currentTarget.dataset.cur[1] + "&isSelected=" + e.currentTarget.dataset.cur[2] ,
       success: function (res) { },
       fail: function (res) { },
       complete: function (res) { },
     })
   },
-
+  getInput: function (e) {
+    this.setData({
+      inputValue: e.detail.value
+    })
+  },
   onReady: function() {
 
   },
-
+  navToSp:function(){
+    wx.navigateTo({
+      url: '../searchPage/searchPage',
+      success: function(res) {},
+      fail: function(res) {},
+      complete: function(res) {},
+    })
+    
+  },
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-
+    var that = this;
+    wx.request({
+      url: 'http://106.15.182.82:8080/searchSaveShareByUserName?username=' + app.globalData.openid,
+      success(res) {
+        console.log(res.data);
+        app.globalData.mySelect = res.data;
+        that.setData({
+          indexItems: res.data
+        })
+        for (var i = 0; i < that.data.indexItems.length; i++) {
+           that.data.indexItems[i].isSelected = true;
+        }
+        that.setData({
+          indexItems: that.data.indexItems
+        })
+        that.refreshItem();
+      }
+    })
   },
 
   /**

@@ -6,6 +6,15 @@ App({
   onLaunch: function() {
     // 展示本地存储能力
 
+    wx.cloud.init()
+    wx.cloud.callFunction({
+      name: 'getId',
+      complete: res => {
+        console.log( res)
+        this.globalData.openid = res.result.openid;
+      }
+    })
+
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
@@ -52,7 +61,7 @@ App({
 
   globalData: {
     userInfo: null,
-
-   
+    openid: null,
+    mySelect: null,
   }
 })

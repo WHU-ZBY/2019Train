@@ -14,6 +14,14 @@
 .topbg{
   background-color: #2f3640;
 }
+.imageBg1{
+  background-image: url(http://i1.fuimg.com/691748/8fd97e13e158e019.jpg);
+  background-size: cover;
+}
+.imageBg2{
+  background-image: url(http://i1.fuimg.com/691748/63c0cb8837846f5e.jpg);
+  background-size: cover;
+}
  .searchbtn {
   background-color: #273c75;
 }

@@ -36,6 +36,8 @@ page{
   margin:10px;
   color: white;
   font: bold;
+  widows: 100%;
+  width: 90px;
   margin-right: 5px;
   background-color:#246bce;
   white-space:nowrap; overflow:hidden; 

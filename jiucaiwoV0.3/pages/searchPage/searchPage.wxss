@@ -1,0 +1,2 @@
+/* pages/searchPage/searchPage.wxss */
+@import "shareItem/shareItem.wxss";

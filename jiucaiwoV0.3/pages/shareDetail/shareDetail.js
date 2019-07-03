@@ -2,6 +2,7 @@
 var wxCharts = require("../../utils/wxcharts.js");
 var daylineChart = null;
 var yuelineChart = null;
+const app = getApp();
 
 Page({
 
@@ -9,8 +10,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    saveBtnContent: '关注',
-    isSave: '0',
+    saveBtnContent: '+ 自选',
+    isSelected: false,
     market: "",
     num: "",
     name: "",
@@ -29,8 +30,14 @@ Page({
   onLoad: function(options) {
     this.setData({
       num: options.num,
-      market: options.market
+      market: options.market,
+      isSelected:options.isSelected
     })
+    if(this.data.isSelected){
+      this.setData({
+        saveBtnContent: '已添加'
+      })
+    }
     this.getShareInf();
 
   },
@@ -154,11 +161,10 @@ Page({
               that.data.dayData = that.data.dayData.concat([res.data.data[res.data.data.length - temi]]);
             }
             that.setData({
-              dayData : that.data.dayData,
+              dayData: that.data.dayData,
               name: that.data.name
             })
-            console.log(that.data.dayData);
-            {
+            console.log(that.data.dayData); {
               var windowWidth = 320;
               try {
                 var res = wx.getSystemInfoSync();
@@ -168,11 +174,11 @@ Page({
               }
 
               for (var j = 0; j < 7; j++) {
-                 console.log(that.data.dayData[j])
-                 that.data.daySP = that.data.daySP.concat(that.data.dayData[j][2]);
+                console.log(that.data.dayData[j])
+                that.data.daySP = that.data.daySP.concat(that.data.dayData[j][2]);
               }
               that.setData({
-                   daySP:that.data.daySP,
+                daySP: that.data.daySP,
               })
               yuelineChart = new wxCharts({ //当月用电折线图配置
                 canvasId: 'yueEle',
@@ -204,8 +210,8 @@ Page({
                   format: function(val) {
                     return val.toFixed(2);
                   },
-                  max: that.data.max*1.3,
-                  min: that.data.min*0.7
+                  max: that.data.max * 1.3,
+                  min: that.data.min * 0.7
                 },
                 width: windowWidth,
                 height: 400,
@@ -289,23 +295,26 @@ Page({
       }
     });
   },
-  save: function () {
-
-    if (this.data.isSave == 0) {
-      console.log(11),
-        this.data.isSave = 1,
-        this.data.saveBtnContent = "已关注",
+  save: function() {
+    var that = this;
+    if (!this.data.isSelected) {
+      wx.request({
+        url: 'http://106.15.182.82:8080/addSaveShare?username='+ app.globalData.openid+'&sharenum=' + that.data.num,
+      })
+      this.data.isSelected = true,
+        this.data.saveBtnContent = "已添加",
         console.log(this.data.saveBtnContent),
         this.setData({
-          saveBtnContent: "已关注"
+          saveBtnContent: "已添加"
         })
-    }
-    else {
-      console.log(1111),
-        this.data.isSave = 0,
-        this.data.saveBtnContent = "关注"
+    } else {
+      wx.request({
+        url: 'http://106.15.182.82:8080/deleteSaveShare?username=' + app.globalData.openid + '&shareNum=' + that.data.num,
+      })
+      this.data.isSelected = false,
+        this.data.saveBtnContent = "+自选"
       this.setData({
-        saveBtnContent: "关注"
+        saveBtnContent: "+自选"
       })
     }
   },

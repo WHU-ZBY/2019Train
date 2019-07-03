@@ -1,7 +1,7 @@
 .UCenter-bg {
-  background-image: url(http://i2.tiimg.com/691748/afd88bb15b5a3873.jpg);
+  background-image: url(http://i1.fuimg.com/691748/8fd97e13e158e019.jpg);
   background-size: cover;
-  height: 450rpx;
+  height: 520rpx;
   display: flex;
   justify-content: center;
   padding-top: 40rpx;
