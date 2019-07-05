@@ -9,10 +9,10 @@
      {{item.shareNum}}</view></view>
     <view class="basis-xs text-left "> 
     <view class="text-sm">{{item.market=='gb_'?'$':item.market=='hk'?'HKD':'￥'}}</view>
-    <view class="text-xl" > {{item.price}}</view>
+    <view class="text-lg" > {{item.price}}</view>
     </view>
-    <view class=" text-md basis-xs  text-left   {{item.present>0?'text-red':'text-green'}}">{{item.present}}%</view>
-    <view class=" text-md  basis-xs  text-left  {{item.forecast>0?'text-red':'text-green'}}">{{item.forecast}}%</view>
+    <view class=" text-lg basis-xs  text-left   {{item.present>0?'text-red':'text-green'}}">{{item.present}}%</view>
+    <view class=" text-lg  basis-xs  text-left  {{item.forecast>0?'text-red':'text-green'}}">{{item.forecast}}%</view>
   </view>
 
 </template>

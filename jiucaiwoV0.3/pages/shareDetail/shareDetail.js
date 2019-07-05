@@ -10,6 +10,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    dataNum : [],
     saveBtnContent: '+ 自选',
     isSelected: false,
     market: "",
@@ -176,14 +177,17 @@ Page({
               for (var j = 0; j < 7; j++) {
                 console.log(that.data.dayData[j])
                 that.data.daySP = that.data.daySP.concat(that.data.dayData[j][2]);
+                that.data.dataNum = that.data.dataNum.concat(that.data.dayData[j][0].substr(that.data.dayData[j][0].length - 3, that.data.dayData[j][0].length))
               }
+              that.data.dataNum = that.data.dataNum.concat("明天");
               that.setData({
                 daySP: that.data.daySP,
+                dataNum: that.data.dataNum
               })
               yuelineChart = new wxCharts({ //当月用电折线图配置
                 canvasId: 'yueEle',
                 type: 'line',
-                categories: ['1', '2', '3', '4', '5', '6', '7'], //categories X轴
+                categories: that.data.dataNum, //categories X轴
                 animation: true,
                 // background: '#f5f5f5',
 
@@ -191,14 +195,14 @@ Page({
                     name: '实际',
                     data: that.data.daySP,
                     format: function(val, name) {
-                      return val.toFixed(2) + 'kWh';
+                      return val.toFixed(2) ;
                     }
                   },
                   {
                     name: '预测',
-                    data: [0, 0, 0, 0, 0, 0, 0],
+                    data: [null, null, null, null, null,null, that.data.daySP[6],6],
                     format: function(val, name) {
-                      return val.toFixed(2) + 'kWh';
+                      return val.toFixed(2) ;
                     }
                   }
                 ],
@@ -215,8 +219,9 @@ Page({
                 },
                 width: windowWidth,
                 height: 400,
-                dataLabel: false,
                 dataPointShape: true,
+                dataLabel: true, 
+                legend: false,
                 extra: {
                   lineStyle: 'curve'
                 }

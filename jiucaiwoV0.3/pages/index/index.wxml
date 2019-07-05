@@ -9,41 +9,22 @@
   </view>
 
 
-  <view class="padding flex flex-direction">
+  <view class="padding flex flex-direction  margin-top-xl ">
     <button class="cu-btn lines-black lg " wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo">授权韭菜窝</button>
     <button class="cu-btn lines-black lg " wx:else bindtap='btn_login'>进入韭菜窝</button>
-    <button class="cu-btn lines-black margin-tb-sm lg">离开韭菜窝</button>
+    
+    <navigator open-type="exit"  target="miniProgram"><button style="width:100%" class="cu-btn bg-black margin-top-lg lg">离开韭菜窝</button></navigator>
 
 
 
 
-    <view class="cu-list menu card-menu margin-top-x1 margin-bottom-x1 shadow-lg radius ">
 
-      <view class="cu-item arrow">
-        <navigator class="content" url="" hover-class="none">
-          <text class="cuIcon-formfill text-black"></text>
-          <text class="text-black">啥是韭菜窝？</text>
-        </navigator>
-      </view>
-      <view class="cu-item arrow">
-        <view class="content" bindtap="showQrcode">
-          <text class="cuIcon-appreciatefill text-black"></text>
-          <text class="text-black">赞赏支持</text>
-        </view>
-      </view>
-      <view class="cu-item arrow">
-        <button class="cu-btn content" open-type="feedback">
-          <text class="cuIcon-writefill  text-black"></text>
-          <text class="text-black">意见反馈</text>
-        </button>
-      </view>
-      <view class="cu-item arrow">
-        <navigator class="content" url="/pages/about/test/list" hover-class="none">
-          <text class="cuIcon-creativefill text-black"></text>
-          <text class="text-black">Bug测试</text>
-        </navigator>
-      </view>
-    </view>
-    <view class="cu-tabbar-height"></view>
+
+
+
+    
+
   </view>
+
+
 </scroll-view>

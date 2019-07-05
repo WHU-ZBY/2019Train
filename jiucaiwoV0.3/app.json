@@ -7,7 +7,8 @@
     "pages/shareDetail/shareDetail",
     "pages/mainpage/myOption/indexItem/indexItem",
     "pages/searchPage/searchPage",
-    "pages/searchPage/shareItem/shareItem"
+    "pages/searchPage/shareItem/shareItem",
+    "pages/mainpage/selectItem/selectItem"
   ],
   "window": {
     "navigationStyle": "custom"

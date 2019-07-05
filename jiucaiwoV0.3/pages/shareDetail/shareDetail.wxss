@@ -9,14 +9,16 @@ page{
   color: #ecf0f1;
 }
 .share-name{
+
   font-size: 26px;
   font: bold;
   text-align: center;
 }
 .share-price{
-  font-size: 26px;
+  font-size:  18px;
+  margin-left: 15%;
   font: bold;
-  text-align: center;
+
 }
 .indexnum{
   margin-top: 10rpx;
@@ -38,8 +40,10 @@ page{
   font: bold;
   widows: 100%;
   width: 90px;
-  margin-right: 5px;
-  background-color:#246bce;
-  white-space:nowrap; overflow:hidden; 
+  margin-right: 10px;
+  white-space:nowrap; 
+  overflow:hidden; 
   text-overflow:ellipsis;
+}.ciyuntuSs{
+  width: 100%;
 }

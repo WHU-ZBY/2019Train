@@ -1,54 +1,76 @@
 <!--pages/mainpage/shareDetail/shareDetail.wxml-->
-    <cu-custom  class="text-white" bgColor="topbg" isBack="{{true}}">
-      <view slot="backText">返回</view>
-      <view slot="content">我的自选</view>
-    </cu-custom>
+<view class="imageBg1">
+  <cu-custom class="text-white" bgColor="imageBg1" isBack="{{true}}">
+    <view slot="backText">返回</view>
+    <view slot="content">
+      <text class="text-xl">{{name}}</text>
+    </view>
+  </cu-custom>
+  <view class="cu-bar solid-bottom margin-top text-white ">
+    <view class='action'>
+      <text class='cuIcon-titles  '></text> {{name}}词云图
+    </view>
+    <view  bindtap='save'>
+        <button class=" cu-btn lines-white saveBtn">
+          {{saveBtnContent}}</button>
+      </view>
+  </view>
+</view>
+<image class="ciyuntuSs" src="http://106.15.182.82:8080/image/get?imgname=华谊腾讯娱乐" mode="aspectFit"></image>
 <view class="box">
 </view>
-<view class="current-info text-align">
-    <view class=" topbg text-white text-align padding-sm margin-xs radius share-name">{{name}}</view>
-  <view class="flex">
-    <view class="flex-treble ">
 
-    <view class=" topbg text-white text-align padding-sm margin-xs radius share-price">{{market=='gb_'?'$':market=='hk'?'HKD':'￥'}}{{price}}</view>
-    </view>
+
+<view class="imageBg1">
+  <view class=" text-align">
+
+    <view class="flex align-center">
+      <view class="flex-treble ">
+
+        <view class="  text-white  share-price ">
+          <text class="text-df">股票今日当前价: </text>
+          <view class="cu-tag line-white sm">{{market=='gb_'?'$':market=='hk'?'HKD':'￥'}}</view> {{price}}
+          <text class="text-df">\n预测明日收盘价: </text>
+          <view class="cu-tag line-white sm">{{market=='gb_'?'$':market=='hk'?'HKD':'￥'}}</view>{{forecastPrice}}</view>
+      </view>
 
 
       <view class="flex-sub  radius " bindtap='save'>
-       <button class=" round saveBtn" >
-       {{saveBtnContent}}</button>
+        <button class=" cu-btn lines-white saveBtn">
+          {{saveBtnContent}}</button>
       </view>
-  </view>
-
-  </view>
-
-
-<view class="grid col-3 margin-bottom text-white text-center">
-  <view class="text-xxl indexnum">开盘</view>
-  <view class="text-xxl indexnum">最高价</view>
-  <view class="text-xxl indexnum">最小价</view>
-  <view class="indexnum">
-    <view class="text-xl ">
-      {{market=='gb_'?'$':market=='hk'?'HKD':'￥'}} {{kaipan}}
     </view>
 
   </view>
-  <view class="indexnum">
-    <view class="text-xl ">
-      {{market=='gb_'?'$':market=='hk'?'HKD':'￥'}} {{max}}
+
+
+  <view class="grid col-3 margin-bottom text-white text-center">
+    <view class="text-df indexnum">今日开盘价</view>
+    <view class="text-df indexnum">今日最高价</view>
+    <view class="text-df indexnum">今日最小价</view>
+    <view class="indexnum">
+      <view class="text-xl ">
+        <view class="cu-tag line-white sm">{{market=='gb_'?'$':market=='hk'?'HKD':'￥'}}</view> {{kaipan}}
+      </view>
+
     </view>
-
-  </view>
-  <view class="indexnum">
-    <view class="text-xl ">
-      {{market=='gb_'?'$':market=='hk'?'HKD':'￥'}} {{min}}
-    </view>
+    <view class="indexnum">
+      <view class="text-xl ">
+        <view class="cu-tag line-white sm">{{market=='gb_'?'$':market=='hk'?'HKD':'￥'}}</view> {{max}}
+      </view>
 
     </view>
+    <view class="indexnum">
+      <view class="text-xl ">
+        <view class="cu-tag line-white sm">{{market=='gb_'?'$':market=='hk'?'HKD':'￥'}}</view>{{min}}
+      </view>
+
+    </view>
   </view>
+</view>
 
-  <view class="foreast-info">
+<view class="foreast-info">
 
-    <canvas style="width: 95%; height: 400px;" canvas-id="yueEle" binderror="canvasIdErrorCallback"></canvas>
+  <canvas style="width: 95%; height: 400px;" canvas-id="yueEle" binderror="canvasIdErrorCallback"></canvas>
 
-  </view>
+</view>

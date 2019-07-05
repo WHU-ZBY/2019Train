@@ -7,20 +7,19 @@ Page({
     motto: 'Hello World',
     userInfo: {},
     hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+
   },
   //事件处理函数
   btn_login: function() {
     var that = this;
     console.log(app.globalData.openid)
     wx.request({
-      url: 'http://106.15.182.82:8080/registerUser?username='+app.globalData.openid,
+      url: 'http://106.15.182.82:8080/registerUser?username=' + app.globalData.openid,
       success(res) {
-        console.log(res.data);      
+        console.log(res.data);
       }
     })
-   
-
     app.globalData.userInfo = this.data.userInfo;
 
     wx.navigateTo({
@@ -74,5 +73,6 @@ Page({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
-  }
+  },
+
 })

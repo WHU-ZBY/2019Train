@@ -3,6 +3,10 @@ const app = getApp();
 
 Page({
   data: {
+    unreadNum: 0,
+    messagesData: null,
+    fbInput: null,
+    modalName: null,
     inputValue: null,
     userInfo: null,
     newspage: 1,
@@ -74,8 +78,21 @@ Page({
   },
 
   NavChange(e) {
+    var that = this;
+    if (e.currentTarget.dataset.cur =="messagesPage"){
+      wx.request({
+        url: 'http://106.15.182.82:8080/changeIsReadByUserName?username=' + app.globalData.openid,
+        success(res) {
+          console.log(res.data);
+        }
+      })
+      that.setData({
+        unreadNum:0
+      })
+    }
     this.setData({
       PageCur: e.currentTarget.dataset.cur,
+      modalName: null,
     })
   },
   /**
@@ -88,15 +105,16 @@ Page({
   onLoad: function(options) {
     // console.log(app.globalData.openid);
     // console.log(app.globalData.userInfo);
-   
+
+    this.getMessages();
 
 
     this.data.userInfo = app.globalData.userInfo;
     this.setData({
-      userInfo:this.data.userInfo,
+      userInfo: this.data.userInfo,
     })
     this.refreshIndex();
-  
+
     this.getNewsTitle();
   },
 
@@ -104,7 +122,7 @@ Page({
     var that = this;
     var newsUrl = "http://api.dagoogle.cn/news/nlist?cid=4&psize=1";
     wx.request({
-      url: newsUrl + "&page="+that.data.newspage,
+      url: newsUrl + "&page=" + that.data.newspage,
       //仅为示例，并非真实的接口地址
 
       header: {
@@ -113,11 +131,9 @@ Page({
       success(res) {
         console.log(res.data.data.list);
         that.data.newsTitles = that.data.newsTitles.concat(res.data.data.list);
-        that.setData(
-          {
-            newsTitles: that.data.newsTitles
-          }
-        )
+        that.setData({
+          newsTitles: that.data.newsTitles
+        })
       }
     })
   },
@@ -159,7 +175,7 @@ Page({
               }
               that.data.hsstockIndexs[hsindex].present = that.data.hsstockIndexs[hsindex].present + present;
             }
-            
+
             that.setData({
               hsstockIndexs: that.data.hsstockIndexs
             })
@@ -306,7 +322,7 @@ Page({
                       that.data.indexItems[itemindex].present = "+"
                     }
                     that.data.indexItems[itemindex].present = that.data.indexItems[itemindex].present + present;
-                  } 
+                  }
                 }
                 break;
               case "hk":
@@ -322,8 +338,8 @@ Page({
                     if (present > 0) {
                       that.data.indexItems[itemindex].present = "+"
                     }
-                    that.data.indexItems[itemindex].present = that.data.indexItems[itemindex].present + present; 
-                    
+                    that.data.indexItems[itemindex].present = that.data.indexItems[itemindex].present + present;
+
                   }
                 }
                 break;
@@ -341,7 +357,7 @@ Page({
                       that.data.indexItems[itemindex].present = "+"
                     }
                     that.data.indexItems[itemindex].present = that.data.indexItems[itemindex].present + present;
-                   
+
                   }
                 }
                 break;
@@ -369,38 +385,112 @@ Page({
 
   },
 
-  NavtoNewsPage:function(e){
+  NavtoNewsPage: function(e) {
     wx.navigateTo({
-        url: '../newsPage/newsPage?newsaid=' + this.data.newsTitles[e.currentTarget.dataset.cur].aid,
+      url: '../newsPage/newsPage?newsaid=' + this.data.newsTitles[e.currentTarget.dataset.cur].aid,
       success: function(res) {},
       fail: function(res) {},
       complete: function(res) {},
     })
   },
-  NavtoShare:function(e){
+  NavtoShare: function(e) {
+    console.log(e);
     wx.navigateTo({
-      url: '../shareDetail/shareDetail?market=' + e.currentTarget.dataset.cur[0] + "&num=" + e.currentTarget.dataset.cur[1] + "&isSelected=" + e.currentTarget.dataset.cur[2] ,
-      success: function (res) { },
-      fail: function (res) { },
-      complete: function (res) { },
+      url: '../shareDetail/shareDetail?market=' + e.currentTarget.dataset.cur[0] + "&num=" + e.currentTarget.dataset.cur[1] + "&isSelected=" + e.currentTarget.dataset.cur[2],
+      success: function(res) {},
+      fail: function(res) {},
+      complete: function(res) {},
     })
   },
-  getInput: function (e) {
+  getInput: function(e) {
     this.setData({
       inputValue: e.detail.value
+    })
+  },
+  getFbIput: function(e) {
+    this.setData({
+      fbInput: e.detail.value
+    })
+  },
+  showModal: function(e) {
+    if (this.data.modalName != null) {
+      this.setData({
+        modalName: null
+      })
+    } else {
+      this.setData({
+        modalName: e.currentTarget.dataset.target
+      })
+    }
+  },
+  hideModal: function(e) {
+    var that = this;
+    switch (this.data.modalName) {
+      case 'feedbackModal':
+        if (this.data.fbInput != null && this.data.fbInput != "") {
+
+          wx.request({
+            url: 'http://106.15.182.82:8080/sendSuggestion?username=' + app.globalData.openid + '&content=' + that.data.fbInput,
+          })
+          wx.showToast({
+            title: '发送成功',
+            icon: 'success',
+            duration: 2000
+          })
+        } else {
+          wx.showToast({
+            title: '请填写内容，再发送',
+            icon: 'none',
+            duration: 2000
+          })
+        }
+        this.setData({
+          fbInput: null
+        })
+        break;
+      case "selectModal":
+        this.onShow();
+        break;
+
+    }
+    this.setData({
+      modalName: null
     })
   },
   onReady: function() {
 
   },
-  navToSp:function(){
+  navToSp: function() {
     wx.navigateTo({
       url: '../searchPage/searchPage',
       success: function(res) {},
       fail: function(res) {},
       complete: function(res) {},
     })
-    
+
+  },
+  addOrDelShare: function(e) {
+    var that = this;
+    var isSelected = e.currentTarget.dataset.cur[0];
+    var num = e.currentTarget.dataset.cur[1];
+    var index = e.currentTarget.dataset.cur[2];
+    if (!isSelected) {
+      wx.request({
+        url: 'http://106.15.182.82:8080/addSaveShare?username=' + app.globalData.openid + '&sharenum=' + num,
+      })
+      this.data.indexItems[index].isSelected = true;
+      this.setData({
+        indexItems: this.data.indexItems
+      })
+    } else {
+      wx.request({
+        url: 'http://106.15.182.82:8080/deleteSaveShare?username=' + app.globalData.openid + '&shareNum=' + num,
+      })
+      this.data.indexItems[index].isSelected = false;
+      this.setData({
+        indexItems: this.data.indexItems
+      })
+    }
   },
   /**
    * 生命周期函数--监听页面显示
@@ -416,7 +506,8 @@ Page({
           indexItems: res.data
         })
         for (var i = 0; i < that.data.indexItems.length; i++) {
-           that.data.indexItems[i].isSelected = true;
+          that.data.indexItems[i].isSelected = true;
+          that.data.indexItems[i].index = i;
         }
         that.setData({
           indexItems: that.data.indexItems
@@ -426,6 +517,39 @@ Page({
     })
   },
 
+  getMessages: function() {
+    var that = this;
+    let map = {}; // 处理过后的数据对象
+    let temps = []; // 临时变量
+
+
+    wx.request({
+      url: 'http://106.15.182.82:8080/getMessageByUserName?username=' + app.globalData.openid,
+      success(res) {
+        console.log(res.data);
+        for (let key in res.data) {
+          let ekey = res.data[key].date;
+          if (res.data[key].isread == 0) {
+            that.data.unreadNum++;
+          }
+          temps = map[ekey] || [];
+          temps.push({
+            date: res.data[key].date,
+            contents: res.data[key],
+          });
+          map[ekey] = temps;
+        }
+        that.data.messagesData = map;
+        that.setData({
+          messagesData: that.data.messagesData,
+          unreadNum: that.data.unreadNum
+        })
+
+
+      }
+    })
+
+  },
   /**
    * 生命周期函数--监听页面隐藏
    */
@@ -453,7 +577,7 @@ Page({
   onReachBottom: function() {
     console.log(this.data.newspage);
     this.setData({
-       newspage:this.data.newspage+1
+      newspage: this.data.newspage + 1
     })
     this.getNewsTitle();
   },

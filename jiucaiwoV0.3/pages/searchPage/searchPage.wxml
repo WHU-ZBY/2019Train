@@ -23,9 +23,7 @@
       <view class="basis-sm">
         <view class=" text-m text-left padding-left-xl ">股票名称</view>
       </view>
-      <view class="basis-sm">
-        <view class=" text-sm text-grey text-left padding-left-lg">股票代号</view>
-      </view>
+
 
     </view>
 

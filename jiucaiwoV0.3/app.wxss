@@ -21,6 +21,9 @@
 .imageBg2{
   background-image: url(http://i1.fuimg.com/691748/63c0cb8837846f5e.jpg);
   background-size: cover;
+}.imageBg3{
+  background-image: url(http://i1.fuimg.com/691748/d0ca866d6d86ea77.jpg);
+  background-size: cover;
 }
  .searchbtn {
   background-color: #273c75;
