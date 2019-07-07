@@ -427,7 +427,7 @@ Page({
   },
   getforecast:function(e){
     for (var i = 0; i < this.data.indexItems.length;i++){
-      this.data.indexItems[i].forecast = (this.data.indexItems[i].price * (2*Math.random())).toFixed(2);
+      this.data.indexItems[i].forecast = (this.data.indexItems[i].price * (1+0.1*Math.random())).toFixed(2);
     }
   },
   showModal: function(e) {
@@ -515,6 +515,7 @@ Page({
    */
   onShow: function() {
     var that = this;
+    setTimeout(this.getforecast, 1000);
     wx.request({
       url: 'http://106.15.182.82:8080/searchSaveShareByUserName?username=' + app.globalData.openid,
       success(res) {
