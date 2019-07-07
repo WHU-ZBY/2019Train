@@ -18,19 +18,19 @@ Page({
       num: "hkHSI",
       price: "-",
       present: "-",
-      forecast: "-"
+      changePrice: "-"
     }, {
       name: "国企指数",
       num: "hkHSCEI",
       price: "-",
       present: "-",
-      forecast: "-"
+        changePrice: "-"
     }, {
       name: "红筹指数",
       num: "hkHSCCI",
       price: "-",
       present: "-",
-      forecast: "-"
+        changePrice: "-"
     }],
 
     hsstockIndexs: [{
@@ -38,38 +38,38 @@ Page({
       num: "sh000001",
       price: "-",
       present: "-",
-      forecast: "-"
+      changePrice: "-"
     }, {
       name: "深圳成指",
       num: "sz399001",
       price: "-",
       present: "-",
-      forecast: "-"
+      changePrice: "-"
     }, {
       name: "创业板指",
       num: "sz399006",
       price: "-",
       present: "-",
-      forecast: "-"
+        changePrice: "-"
     }],
     mgstockIndexs: [{
       name: "道琼斯",
       num: "gb_dji",
       price: "-",
       present: "-",
-      forecast: "-"
+      changePrice: "-"
     }, {
       name: "纳斯达克",
       num: "gb_ixic",
       price: "",
       present: "-",
-      forecast: "-"
+        changePrice: "-"
     }, {
       name: "标普500",
       num: "gb_inx",
       price: "-",
       present: "-",
-      forecast: "-"
+        changePrice: "-"
     }],
 
     PageCur: 'myOption',
@@ -79,7 +79,7 @@ Page({
 
   NavChange(e) {
     var that = this;
-    if (e.currentTarget.dataset.cur =="messagesPage"){
+    if (e.currentTarget.dataset.cur == "messagesPage") {
       wx.request({
         url: 'http://106.15.182.82:8080/changeIsReadByUserName?username=' + app.globalData.openid,
         success(res) {
@@ -87,7 +87,7 @@ Page({
         }
       })
       that.setData({
-        unreadNum:0
+        unreadNum: 0
       })
     }
     this.setData({
@@ -108,7 +108,7 @@ Page({
 
     this.getMessages();
 
-
+    setTimeout(this.getforecast, 1000);
     this.data.userInfo = app.globalData.userInfo;
     this.setData({
       userInfo: this.data.userInfo,
@@ -167,13 +167,16 @@ Page({
               that.data.hsstockIndexs[hsindex].price = result[2];
               that.data.hsstockIndexs[hsindex].present = "-";
             } else {
+              var changePrice = (result[3] - result[2]);
               var present = (result[3] - result[2]) * 100 / result[2];
               present = present.toFixed(2);
               that.data.hsstockIndexs[hsindex].present = ""
               if (present > 0) {
-                that.data.hsstockIndexs[hsindex].present = "+"
+                that.data.hsstockIndexs[hsindex].present = "+";
+                that.data.hsstockIndexs[hsindex].changePrice = "+"
               }
               that.data.hsstockIndexs[hsindex].present = that.data.hsstockIndexs[hsindex].present + present;
+              that.data.hsstockIndexs[hsindex].changePrice = that.data.hsstockIndexs[hsindex].changePrice+ changePrice.toFixed(2);
             }
 
             that.setData({
@@ -211,14 +214,19 @@ Page({
               that.data.ggstockIndexs[ggindex].price = result[3];
               that.data.ggstockIndexs[ggindex].present = "-";
             } else {
+              var changePrice = (result[6] - result[3]);
               var present = (result[6] - result[3]) * 100 / result[3];
               present = present.toFixed(2);
               that.data.ggstockIndexs[ggindex].present = "";
+              that.data.ggstockIndexs[ggindex].changePrice = "";
               if (present > 0) {
-                that.data.ggstockIndexs[ggindex].present = "+"
-              }
+                that.data.ggstockIndexs[ggindex].present = "+";
+                that.data.ggstockIndexs[ggindex].changePrice = "+";
+              } 
               that.data.ggstockIndexs[ggindex].present = that.data.ggstockIndexs[ggindex].present + present;
-            }
+              that.data.ggstockIndexs[ggindex].changePrice = that.data.ggstockIndexs[ggindex].changePrice + changePrice.toFixed(2);
+              
+            } 
 
             that.setData({
               ggstockIndexs: that.data.ggstockIndexs
@@ -255,13 +263,17 @@ Page({
               that.data.mgstockIndexs[mgindex].price = result[26];
               that.data.mgstockIndexs[mgindex].present = "-";
             } else {
+              that.data.mgstockIndexs[mgindex].changePrice = "";
               that.data.mgstockIndexs[mgindex].present = "";
+              var changePrice = (result[1] - result[26]);
               var present = (result[1] - result[26]) * 100 / result[26];
               present = present.toFixed(2);
               if (present > 0) {
-                that.data.mgstockIndexs[mgindex].present = "+"
+                that.data.mgstockIndexs[mgindex].present = "+";
+                that.data.mgstockIndexs[mgindex].changePrice = "+"
               }
               that.data.mgstockIndexs[mgindex].present = that.data.mgstockIndexs[mgindex].present + present;
+              that.data.mgstockIndexs[mgindex].changePrice = that.data.mgstockIndexs[mgindex].changePrice+changePrice.toFixed(2);
             }
 
             that.setData({
@@ -362,6 +374,7 @@ Page({
                 }
                 break;
             }
+           
             that.setData({
               indexItems: that.data.indexItems
             })
@@ -411,6 +424,11 @@ Page({
     this.setData({
       fbInput: e.detail.value
     })
+  },
+  getforecast:function(e){
+    for (var i = 0; i < this.data.indexItems.length;i++){
+      this.data.indexItems[i].forecast = (this.data.indexItems[i].price * (2*Math.random())).toFixed(2);
+    }
   },
   showModal: function(e) {
     if (this.data.modalName != null) {

@@ -10,7 +10,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    dataNum : [],
+    imageSrc: null,
+    dataNum: [],
     saveBtnContent: '+ 自选',
     isSelected: false,
     market: "",
@@ -29,14 +30,15 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+
     this.setData({
       num: options.num,
       market: options.market,
-      isSelected:options.isSelected
+      isSelected: options.isSelected
     })
-    if(this.data.isSelected){
+    if (this.data.isSelected == "true") {
       this.setData({
-        saveBtnContent: '已添加'
+        saveBtnContent: "已添加"
       })
     }
     this.getShareInf();
@@ -46,7 +48,7 @@ Page({
     var that = this;
     wx.request({
       url: "http://hq.sinajs.cn/list=" + this.data.market + this.data.num.toLowerCase(),
-      //仅为示例，并非真实的接口地址
+
 
       header: {
         'content-type': 'text/json' // 默认值l
@@ -133,6 +135,7 @@ Page({
         }
         that.setData({
           name: that.data.name,
+        
           max: that.data.max,
           min: that.data.min,
           kaipan: that.data.kaipan,
@@ -140,6 +143,10 @@ Page({
           present: that.data.present,
           forecast: that.data.forecast,
         })
+
+
+
+
         console.log(that.data.name);
         var marketTag = that.data.market == 'gb_' ? 'us' : that.data.market == 'hk' ? 'hk' : 'hs'
         var klineUrl;
@@ -163,70 +170,98 @@ Page({
             }
             that.setData({
               dayData: that.data.dayData,
-              name: that.data.name
+              name: that.data.name,
             })
-            console.log(that.data.dayData); {
-              var windowWidth = 320;
-              try {
-                var res = wx.getSystemInfoSync();
-                windowWidth = res.windowWidth;
-              } catch (e) {
-                console.error('getSystemInfoSync failed!');
-              }
+            console.log(that.data.dayData);
 
-              for (var j = 0; j < 7; j++) {
-                console.log(that.data.dayData[j])
-                that.data.daySP = that.data.daySP.concat(that.data.dayData[j][2]);
-                that.data.dataNum = that.data.dataNum.concat(that.data.dayData[j][0].substr(that.data.dayData[j][0].length - 3, that.data.dayData[j][0].length))
-              }
-              that.data.dataNum = that.data.dataNum.concat("明天");
-              that.setData({
-                daySP: that.data.daySP,
-                dataNum: that.data.dataNum
-              })
-              yuelineChart = new wxCharts({ //当月用电折线图配置
-                canvasId: 'yueEle',
-                type: 'line',
-                categories: that.data.dataNum, //categories X轴
-                animation: true,
-                // background: '#f5f5f5',
+            wx.request({
+              url: 'http://106.15.182.82:8080/getForecastInfo?sharename=' + that.data.name + '&sharenum=' + that.data.num + '&market=' + that.data.market,
+              header: {
+                'content-type': 'application/json'
+              },
+              success(res) {
+                console.log(res);
+                that.setData({
+                  imageSrc: "http://106.15.182.82:8080/image/get?imgname=" + that.data.name + "  ",
 
-                series: [{
-                    name: '实际',
-                    data: that.data.daySP,
-                    format: function(val, name) {
-                      return val.toFixed(2) ;
-                    }
-                  },
-                  {
-                    name: '预测',
-                    data: [null, null, null, null, null,null, that.data.daySP[6],6],
-                    format: function(val, name) {
-                      return val.toFixed(2) ;
-                    }
-                  }
-                ],
-                xAxis: {
-                  disableGrid: true
-                },
-                yAxis: {
-                  title: '股票',
-                  format: function(val) {
-                    return val.toFixed(2);
-                  },
-                  max: that.data.max * 1.3,
-                  min: that.data.min * 0.7
-                },
-                width: windowWidth,
-                height: 400,
-                dataPointShape: true,
-                dataLabel: true, 
-                legend: false,
-                extra: {
-                  lineStyle: 'curve'
+                })
+                if (typeof res.data == 'number') {
+                  that.setData({
+                    forecast: res.data.toFixed(3)
+
+                  })
                 }
-              });
-            }
+
+                {
+                  var windowWidth = 320;
+                  try {
+                    var res = wx.getSystemInfoSync();
+                    windowWidth = res.windowWidth;
+                  } catch (e) {
+                    console.error('getSystemInfoSync failed!');
+                  }
+
+                  for (var j = 0; j < 7; j++) {
+                    console.log(that.data.dayData[j])
+                    that.data.daySP = that.data.daySP.concat(that.data.dayData[j][2]);
+                    that.data.dataNum = that.data.dataNum.concat(that.data.dayData[j][0].substr(that.data.dayData[j][0].length - 3, that.data.dayData[j][0].length))
+                  }
+                  that.data.dataNum = that.data.dataNum.concat("明天");
+                  that.setData({
+                    daySP: that.data.daySP,
+                    dataNum: that.data.dataNum
+                  })
+                  yuelineChart = new wxCharts({ //当月用电折线图配置
+                    canvasId: 'yueEle',
+                    type: 'line',
+                    categories: that.data.dataNum, //categories X轴
+                    animation: true,
+                    // background: '#f5f5f5',
+
+                    series: [{
+                      name: '实际',
+                      data: that.data.daySP,
+                      format: function (val, name) {
+                        return val.toFixed(2);
+                      }
+                    },
+                    {
+                      name: '预测',
+                      data: [null, null, null, null, null, null, that.data.daySP[6], 6],
+                      format: function (val, name) {
+                        return val.toFixed(2);
+                      }
+                    }
+                    ],
+                    xAxis: {
+                      disableGrid: true
+                    },
+                    yAxis: {
+                      title: '股票',
+                      format: function (val) {
+                        return val.toFixed(2);
+                      },
+                      max: that.data.max * 1.3,
+                      min: that.data.min * 0.7
+                    },
+                    width: windowWidth,
+                    height: 400,
+                    dataPointShape: true,
+                    dataLabel: true,
+                    legend: false,
+                    extra: {
+                      lineStyle: 'curve'
+                    }
+                  });
+                }
+              },
+              fail(res) {
+                that.setData({
+                  imageSrc: "http://106.15.182.82:8080/image/get?imgname=" + that.data.name+ "  "
+                })
+              }
+            })
+            
           }
         })
 
@@ -304,7 +339,7 @@ Page({
     var that = this;
     if (!this.data.isSelected) {
       wx.request({
-        url: 'http://106.15.182.82:8080/addSaveShare?username='+ app.globalData.openid+'&sharenum=' + that.data.num,
+        url: 'http://106.15.182.82:8080/addSaveShare?username=' + app.globalData.openid + '&sharenum=' + that.data.num,
       })
       this.data.isSelected = true,
         this.data.saveBtnContent = "已添加",
@@ -322,6 +357,9 @@ Page({
         saveBtnContent: "+自选"
       })
     }
+  },
+  reloadimage: function() {
+
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

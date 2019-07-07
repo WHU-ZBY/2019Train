@@ -16,7 +16,7 @@
       </view>
   </view>
 </view>
-<image class="ciyuntuSs" src="http://106.15.182.82:8080/image/get?imgname=华谊腾讯娱乐" mode="aspectFit"></image>
+<image wx:if="false" class="ciyuntuSs"  src="{{imageSrc}}" mode="aspectFit"></image>
 <view class="box">
 </view>
 
@@ -31,7 +31,7 @@
           <text class="text-df">股票今日当前价: </text>
           <view class="cu-tag line-white sm">{{market=='gb_'?'$':market=='hk'?'HKD':'￥'}}</view> {{price}}
           <text class="text-df">\n预测明日收盘价: </text>
-          <view class="cu-tag line-white sm">{{market=='gb_'?'$':market=='hk'?'HKD':'￥'}}</view>{{forecastPrice}}</view>
+          <view class="cu-tag line-white sm">{{market=='gb_'?'$':market=='hk'?'HKD':'￥'}}</view> {{forecast}}</view>
       </view>
 
 

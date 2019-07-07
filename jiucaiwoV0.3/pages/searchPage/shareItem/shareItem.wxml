@@ -4,7 +4,7 @@
 
 
   <view class="padding-xxl radius bg-black  grid flex flex-wrap  align-center margin-bottom ">
-    <view class="basis-lg  " bindtap="NavtoShare" data-cur="{{[item.market,item.shareNum]}}">
+    <view class="basis-lg  " bindtap="NavtoShare" data-cur="{{[item.market,item.shareNum,item.isSelected]}}">
       <view class=" text-md text-cut text-bold text-left padding-left-lg align-center" style="width:200px">
 
         <view class=" text-xl ShareNameSs">{{item.shareName}}</view>

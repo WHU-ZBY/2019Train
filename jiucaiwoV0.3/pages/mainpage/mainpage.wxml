@@ -24,8 +24,9 @@
             {{ hsstockIndexs[0].price}}
           </view>
           <view class="  grid flex  ">
+            <view class="  flex-twice padding-sm {{hsstockIndexs[0].changePrice>0?'text-red':'text-green'}}">{{hsstockIndexs[0].changePrice}}</view>
             <view class=" flex-twice padding-sm {{hsstockIndexs[0].present>0?'text-red':'text-green'}}">{{hsstockIndexs[0].present}}% </view>
-            <view class="  flex-twice padding-sm {{hsstockIndexs[0].forecast>0?'text-red':'text-green'}}">{{hsstockIndexs[0].forecast}}% </view>
+
           </view>
         </view>
         <view class="indexnum">
@@ -33,8 +34,9 @@
             {{ ggstockIndexs[0].price}}
           </view>
           <view class="  grid flex  ">
+            <view class="  flex-twice padding-sm {{ggstockIndexs[0].changePrice>0?'text-red':'text-green'}}">{{ggstockIndexs[0].changePrice}} </view>
             <view class=" flex-twice padding-sm {{ggstockIndexs[0].present>0?'text-red':'text-green'}}">{{ggstockIndexs[0].present}}% </view>
-            <view class="  flex-twice padding-sm {{ggstockIndexs[0].forecast>0?'text-red':'text-green'}}">{{ggstockIndexs[0].forecast}}% </view>
+
           </view>
         </view>
         <view class="indexnum">
@@ -42,8 +44,9 @@
             {{ mgstockIndexs[0].price}}
           </view>
           <view class="  grid flex  ">
+            <view class="  flex-twice padding-sm {{mgstockIndexs[0].changePrice>0?'text-red':'text-green'}}">{{mgstockIndexs[0].changePrice}}</view>
             <view class=" flex-twice padding-sm {{mgstockIndexs[0].present>0?'text-red':'text-green'}}">{{mgstockIndexs[0].present}}% </view>
-            <view class="  flex-twice padding-sm {{mgstockIndexs[0].forecast>0?'text-red':'text-green'}}">{{mgstockIndexs[0].forecast}}% </view>
+
           </view>
         </view>
 
@@ -66,8 +69,8 @@
           <view class=" text-sm text-grey text-left padding-left-xl">股票代号</view>
         </view>
         <view class="  text-sm basis-xs padding-top-sm text-left ">当前价格</view>
-        <view class=" text-sm basis-xs padding-top-sm text-left">当前跌幅</view>
-        <view class=" text-sm basis-xs padding-top-sm text-left">预测跌幅</view>
+        <view class=" text-sm basis-xs padding-top-sm text-left">当前涨跌幅</view>
+        <view class=" text-xs basis-xs padding-top-sm text-left">预测明日收盘价</view>
       </view>
 
       <block wx:for="{{indexItems}}" wx:key="indexItems" wx:for-item="item">
@@ -122,9 +125,10 @@
         <view class="text text-white indexnum" wx:for="{{3}}" wx:key>
           <view class="text-xl  text-white " wx:key>{{ hsstockIndexs[index].price}}</view>
 
-          <view class="  grid flex  ">
+          <view class="  grid flex  text-sm  ">
+            <view class="  flex-twice padding-sm  {{hsstockIndexs[index].changePrice>0?'text-red':'text-green'}}">{{hsstockIndexs[index].changePrice}} </view>
             <view class=" flex-twice padding-sm  {{hsstockIndexs[index].present>0?'text-red':'text-green'}}">{{hsstockIndexs[index].present}}% </view>
-            <view class="  flex-twice padding-sm  {{hsstockIndexs[index].forecast>0?'text-red':'text-green'}}">{{hsstockIndexs[index].forecast}}% </view>
+
           </view>
         </view>
       </view>
@@ -135,9 +139,9 @@
         <view class="text text-white indexnum" wx:for="{{3}}" wx:key>
           <view class="text-xl  text-white " wx:key>{{ ggstockIndexs[index].price}}</view>
 
-          <view class="  grid flex  ">
+          <view class="  grid flex  text-sm  ">
+            <view class="  flex-twice padding-sm  {{ggstockIndexs[index].changePrice>0?'text-red':'text-green'}}">{{ggstockIndexs[index].changePrice}} </view>
             <view class=" flex-twice padding-sm  {{ggstockIndexs[index].present>0?'text-red':'text-green'}}">{{ggstockIndexs[index].present}}% </view>
-            <view class="  flex-twice padding-sm  {{ggstockIndexs[index].forecast>0?'text-red':'text-green'}}">{{ggstockIndexs[index].forecast}}% </view>
           </view>
         </view>
       </view>
@@ -149,9 +153,9 @@
         <view class="text text-white indexnum" wx:for="{{3}}" wx:key>
           <view class="text-xl  text-white " wx:key>{{ mgstockIndexs[index].price}}</view>
 
-          <view class="  grid flex  ">
+          <view class="  grid flex  text-sm  ">
+            <view class="  flex-twice padding-sm  {{mgstockIndexs[index].changePrice>0?'text-red':'text-green'}}">{{mgstockIndexs[index].changePrice}} </view>
             <view class=" flex-twice padding-sm  {{mgstockIndexs[index].present>0?'text-red':'text-green'}}">{{mgstockIndexs[index].present}}% </view>
-            <view class="  flex-twice padding-sm  {{mgstockIndexs[index].forecast>0?'text-red':'text-green'}}">{{mgstockIndexs[index].forecast}}% </view>
           </view>
         </view>
       </view>
@@ -333,8 +337,11 @@
     </view>
     <view class="action" bindtap="NavChange" data-cur="messagesPage">
       <view class='cuIcon-cu-image'>
-        <view ><image src="/images/tabbar/messagesPage{{PageCur=='messagesPage'?'_cur':''}}.png">  </image></view> <view wx:if="{{unreadNum!=0}}" style="margin-right:20%" class="cu-tag badge" >{{unreadNum}}</view>
-       </view> 
+        <view>
+          <image src="/images/tabbar/messagesPage{{PageCur=='messagesPage'?'_cur':''}}.png"> </image>
+        </view>
+        <view wx:if="{{unreadNum!=0}}" style="margin-right:20%" class="cu-tag badge">{{unreadNum}}</view>
+      </view>
       <view class="{{PageCur=='messagesPage'?'text-white':'text-gray'}}">消息</view>
     </view>
     <view class="action" bindtap="NavChange" data-cur="myPage">
