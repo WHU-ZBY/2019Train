@@ -2,6 +2,7 @@
 //app.js
 const Towxml = require('/towxml/main');    //引入towxml库
 
+
 App({
   onLaunch: function() {
     // 展示本地存储能力
@@ -14,7 +15,7 @@ App({
         this.globalData.openid = res.result.openid;
       }
     })
-
+    this.getNwType();
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
@@ -56,12 +57,29 @@ App({
       }
     })
   },
+  getNwType:function(){
+    var that =this;
+    wx.getNetworkType({
+      success(res) {
+        that.globalData.networkType = res.networkType;
+        if (res.networkType == "none" && ! that.globalData.inIndexPage) {
+          wx.redirectTo({
 
+            url: '/pages/index/index',
+
+          });
+        }
+      }
+    })
+    setTimeout(this.getNwType, 1000);
+  },
   towxml: new Towxml(),  
 
   globalData: {
     userInfo: null,
     openid: null,
     mySelect: null,
+    networkType:null,
+    inIndexPage:true
   }
 })

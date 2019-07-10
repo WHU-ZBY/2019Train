@@ -71,6 +71,12 @@
 
 <view class="foreast-info">
 
-  <canvas style="width: 95%; height: 400px;" canvas-id="yueEle" binderror="canvasIdErrorCallback"></canvas>
+  <canvas style="width: 98%; height: 200px;" canvas-id="yueEle" binderror="canvasIdErrorCallback"></canvas>
 
+</view>
+
+<view class='cu-load load-modal'  wx:if="{{loadModal}}">
+  <!-- <view class='cuIcon-emojifill text-orange'></view> -->
+  <image src='/images/logo.png' class='png' mode='aspectFit'></image>
+  <view class='black-text'>分析数据中...</view>
 </view>

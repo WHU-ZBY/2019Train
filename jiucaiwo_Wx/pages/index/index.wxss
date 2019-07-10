@@ -1,5 +1,6 @@
+@import "../../colorui/animation.wxss";
 .UCenter-bg {
-  background-image: url(http://i2.tiimg.com/691748/95b4f888986f77a8.jpg);
+  background-image: url(http://i1.fuimg.com/691748/95b4f888986f77a8.jpg);
   background-size: cover;
   height: 75vh;
   display: flex;

@@ -94,7 +94,28 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
+    var that = this;
 
+    wx.request({
+      url: 'http://106.15.182.82:8080/searchSaveShareByUserName?username=' + app.globalData.openid,
+      success(res) {
+        console.log(res.data);
+        app.globalData.mySelect = res.data;
+        for (var i = 0; i < that.data.shareItems.length; i++) {
+          that.data.shareItems[i].isSelected = false;
+          that.data.shareItems[i].index = i;
+          for (var j = 0; j < app.globalData.mySelect.length; j++) {
+            if (that.data.shareItems[i].shareNum == app.globalData.mySelect[j].shareNum) {
+              that.data.shareItems[i].isSelected = true;
+            }
+          }
+        }
+        that.setData({
+          shareItems:that.data.shareItems
+        })
+      }
+    })
+  
   },
 
   /**

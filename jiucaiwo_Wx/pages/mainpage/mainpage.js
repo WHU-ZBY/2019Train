@@ -13,6 +13,8 @@ Page({
     marketName: ["沪深", "港股", "美股"],
     TabCur: 0,
     indexItems: null,
+    showGoTop: false,
+    NewsscrollTop:0,
     ggstockIndexs: [{
       name: "恒生指数",
       num: "hkHSI",
@@ -24,13 +26,13 @@ Page({
       num: "hkHSCEI",
       price: "-",
       present: "-",
-        changePrice: "-"
+      changePrice: "-"
     }, {
       name: "红筹指数",
       num: "hkHSCCI",
       price: "-",
       present: "-",
-        changePrice: "-"
+      changePrice: "-"
     }],
 
     hsstockIndexs: [{
@@ -50,7 +52,7 @@ Page({
       num: "sz399006",
       price: "-",
       present: "-",
-        changePrice: "-"
+      changePrice: "-"
     }],
     mgstockIndexs: [{
       name: "道琼斯",
@@ -63,13 +65,13 @@ Page({
       num: "gb_ixic",
       price: "",
       present: "-",
-        changePrice: "-"
+      changePrice: "-"
     }, {
       name: "标普500",
       num: "gb_inx",
       price: "-",
       present: "-",
-        changePrice: "-"
+      changePrice: "-"
     }],
 
     PageCur: 'myOption',
@@ -108,7 +110,7 @@ Page({
 
     this.getMessages();
 
-    setTimeout(this.getforecast, 1000);
+ 
     this.data.userInfo = app.globalData.userInfo;
     this.setData({
       userInfo: this.data.userInfo,
@@ -171,12 +173,13 @@ Page({
               var present = (result[3] - result[2]) * 100 / result[2];
               present = present.toFixed(2);
               that.data.hsstockIndexs[hsindex].present = ""
+              that.data.hsstockIndexs[hsindex].changePrice  = ""
               if (present > 0) {
                 that.data.hsstockIndexs[hsindex].present = "+";
                 that.data.hsstockIndexs[hsindex].changePrice = "+"
               }
               that.data.hsstockIndexs[hsindex].present = that.data.hsstockIndexs[hsindex].present + present;
-              that.data.hsstockIndexs[hsindex].changePrice = that.data.hsstockIndexs[hsindex].changePrice+ changePrice.toFixed(2);
+              that.data.hsstockIndexs[hsindex].changePrice = that.data.hsstockIndexs[hsindex].changePrice + changePrice.toFixed(2);
             }
 
             that.setData({
@@ -222,11 +225,11 @@ Page({
               if (present > 0) {
                 that.data.ggstockIndexs[ggindex].present = "+";
                 that.data.ggstockIndexs[ggindex].changePrice = "+";
-              } 
+              }
               that.data.ggstockIndexs[ggindex].present = that.data.ggstockIndexs[ggindex].present + present;
               that.data.ggstockIndexs[ggindex].changePrice = that.data.ggstockIndexs[ggindex].changePrice + changePrice.toFixed(2);
-              
-            } 
+
+            }
 
             that.setData({
               ggstockIndexs: that.data.ggstockIndexs
@@ -273,7 +276,7 @@ Page({
                 that.data.mgstockIndexs[mgindex].changePrice = "+"
               }
               that.data.mgstockIndexs[mgindex].present = that.data.mgstockIndexs[mgindex].present + present;
-              that.data.mgstockIndexs[mgindex].changePrice = that.data.mgstockIndexs[mgindex].changePrice+changePrice.toFixed(2);
+              that.data.mgstockIndexs[mgindex].changePrice = that.data.mgstockIndexs[mgindex].changePrice + changePrice.toFixed(2);
             }
 
             that.setData({
@@ -295,6 +298,22 @@ Page({
 
 
     var that = this
+    wx.request({
+      url: 'http://106.15.182.82:8080/searchSaveShareByUserName?username=' + app.globalData.openid,
+      success(res) {
+
+        app.globalData.mySelect = res.data;
+
+        for (var i = 0; i < res.data.length; i++) {
+          that.data.indexItems[i].isSelected = true;
+          that.data.indexItems[i].forecast = res.data[i].forecast.toFixed(3);
+        }
+        that.setData({
+          indexItems: that.data.indexItems
+        })
+       
+      }
+    })
     var url = 'https://hq.sinajs.cn/list='
     //沪深
     {
@@ -374,7 +393,7 @@ Page({
                 }
                 break;
             }
-           
+
             that.setData({
               indexItems: that.data.indexItems
             })
@@ -385,7 +404,9 @@ Page({
 
       })
     }
-    setTimeout(this.refreshItem, 3000)
+    if (this.data.PageCur =="myOption"){
+      setTimeout(this.refreshItem, 3000)
+    }
   },
 
   /**
@@ -425,11 +446,7 @@ Page({
       fbInput: e.detail.value
     })
   },
-  getforecast:function(e){
-    for (var i = 0; i < this.data.indexItems.length;i++){
-      this.data.indexItems[i].forecast = (this.data.indexItems[i].price * (1+0.1*Math.random())).toFixed(2);
-    }
-  },
+
   showModal: function(e) {
     if (this.data.modalName != null) {
       this.setData({
@@ -515,10 +532,10 @@ Page({
    */
   onShow: function() {
     var that = this;
-    setTimeout(this.getforecast, 1000);
+
     wx.request({
       url: 'http://106.15.182.82:8080/searchSaveShareByUserName?username=' + app.globalData.openid,
-      success(res) {
+      success(res) {  
         console.log(res.data);
         app.globalData.mySelect = res.data;
         that.setData({
@@ -527,6 +544,7 @@ Page({
         for (var i = 0; i < that.data.indexItems.length; i++) {
           that.data.indexItems[i].isSelected = true;
           that.data.indexItems[i].index = i;
+          that.data.indexItems[i].forecast = that.data.indexItems[i].forecast.toFixed(3);
         }
         that.setData({
           indexItems: that.data.indexItems
@@ -534,6 +552,24 @@ Page({
         that.refreshItem();
       }
     })
+  },
+  onPageScroll: function (e) {
+    console.log(e.detail.scrollTop)
+    if (e.detail.scrollTop > 1500) {
+      this.setData({
+        showGoTop: true
+      })
+    } else {
+      this.setData({
+        showGoTop: false
+      })
+    }
+  },
+  // 回到顶部
+  goTop: function (e) {
+   this.setData({
+     NewsscrollTop:0
+   })
   },
 
   getMessages: function() {
@@ -546,7 +582,9 @@ Page({
       url: 'http://106.15.182.82:8080/getMessageByUserName?username=' + app.globalData.openid,
       success(res) {
         console.log(res.data);
+        var num = 0;
         for (let key in res.data) {
+          num++;
           let ekey = res.data[key].date;
           if (res.data[key].isread == 0) {
             that.data.unreadNum++;
@@ -558,16 +596,31 @@ Page({
           });
           map[ekey] = temps;
         }
+        map.num = num;
         that.data.messagesData = map;
         that.setData({
           messagesData: that.data.messagesData,
-          unreadNum: that.data.unreadNum
+         
         })
-
+        if (that.data.PageCur== "messagesPage") {
+          wx.request({
+            url: 'http://106.15.182.82:8080/changeIsReadByUserName?username=' + app.globalData.openid,
+            success(res) {
+              console.log(res.data);
+            }
+          })
+          that.setData({
+            unreadNum: 0
+          })
+        }else{
+         that.setData({
+           unreadNum: that.data.unreadNum
+         })
+        }
 
       }
     })
-
+    setTimeout(this.getMessages, 30000);
   },
   /**
    * 生命周期函数--监听页面隐藏

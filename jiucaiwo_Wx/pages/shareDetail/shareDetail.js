@@ -10,6 +10,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    loadModal:true,
     imageSrc: null,
     dataNum: [],
     saveBtnContent: '+ 自选',
@@ -34,9 +35,9 @@ Page({
     this.setData({
       num: options.num,
       market: options.market,
-      isSelected: options.isSelected
+      isSelected: options.isSelected == 'true' ? true : options.isSelected == 'false' ? false:''
     })
-    if (this.data.isSelected == "true") {
+    if (this.data.isSelected) {
       this.setData({
         saveBtnContent: "已添加"
       })
@@ -170,7 +171,7 @@ Page({
             }
             that.setData({
               dayData: that.data.dayData,
-              name: that.data.name,
+              name: that.data.name
             })
             console.log(that.data.dayData);
 
@@ -182,13 +183,13 @@ Page({
               success(res) {
                 console.log(res);
                 that.setData({
-                  imageSrc: "http://106.15.182.82:8080/image/get?imgname=" + that.data.name + "  ",
+                  imageSrc: "http://106.15.182.82:8080/image/get?imgname=" + that.data.num + "  ",
 
                 })
                 if (typeof res.data == 'number') {
                   that.setData({
-                    forecast: res.data.toFixed(3)
-
+                    forecast: res.data.toFixed(3),
+                    loadModal : false
                   })
                 }
 
@@ -207,29 +208,32 @@ Page({
                     that.data.dataNum = that.data.dataNum.concat(that.data.dayData[j][0].substr(that.data.dayData[j][0].length - 3, that.data.dayData[j][0].length))
                   }
                   that.data.dataNum = that.data.dataNum.concat("明天");
+                  that.data.dataNum = that.data.dataNum.concat("");
                   that.setData({
                     daySP: that.data.daySP,
                     dataNum: that.data.dataNum
                   })
+                
                   yuelineChart = new wxCharts({ //当月用电折线图配置
                     canvasId: 'yueEle',
                     type: 'line',
                     categories: that.data.dataNum, //categories X轴
                     animation: true,
+
                     // background: '#f5f5f5',
 
                     series: [{
                       name: '实际',
                       data: that.data.daySP,
                       format: function (val, name) {
-                        return val.toFixed(2);
+                        return val;
                       }
                     },
                     {
                       name: '预测',
-                      data: [null, null, null, null, null, null, that.data.daySP[6], 6],
+                      data: [null, null, null, null, null, null, that.data.daySP[6], that.data.forecast],
                       format: function (val, name) {
-                        return val.toFixed(2);
+                        return val;
                       }
                     }
                     ],
@@ -241,16 +245,17 @@ Page({
                       format: function (val) {
                         return val.toFixed(2);
                       },
-                      max: that.data.max * 1.3,
-                      min: that.data.min * 0.7
+                      max: that.data.max * 1.1,
+                      min: that.data.min * 0.8
                     },
-                    width: windowWidth,
-                    height: 400,
+                    width: windowWidth*1.1,
+                    height: 200,
                     dataPointShape: true,
                     dataLabel: true,
                     legend: false,
                     extra: {
-                      lineStyle: 'curve'
+                      lineStyle: 'straight',
+                     
                     }
                   });
                 }
@@ -276,65 +281,7 @@ Page({
       delta: -1
     });
   },
-  getMothElectro: function() {
-    // var that = this;
-    var windowWidth = 320;
-    try {
-      var res = wx.getSystemInfoSync();
-      windowWidth = res.windowWidth;
-    } catch (e) {
-      console.error('getSystemInfoSync failed!');
-    }
 
-    for (var j = 0; j < 7; j++) {
-      //  console.log(that.data.dayData)
-      //   this.data.daySP = this.data.daySP.concat(this.data.dayData[j][2]);
-    }
-    this.setData({
-      //   daySP:this.data.daySP,
-    })
-    yuelineChart = new wxCharts({ //当月用电折线图配置
-      canvasId: 'yueEle',
-      type: 'line',
-      categories: ['1', '2', '3', '4', '5', '6', '7'], //categories X轴
-      animation: true,
-      // background: '#f5f5f5',
-
-      series: [{
-          name: '实际',
-          data: this.data.daySP,
-          format: function(val, name) {
-            return val.toFixed(2) + 'kWh';
-          }
-        },
-        {
-          name: '预测',
-          data: [0, 0, 0, 0, 0, 0, 0],
-          format: function(val, name) {
-            return val.toFixed(2) + 'kWh';
-          }
-        }
-      ],
-      xAxis: {
-        disableGrid: true
-      },
-      yAxis: {
-        title: '股票',
-        format: function(val) {
-          return val.toFixed(2);
-        },
-        max: 20,
-        min: 0
-      },
-      width: windowWidth,
-      height: 400,
-      dataLabel: false,
-      dataPointShape: true,
-      extra: {
-        lineStyle: 'curve'
-      }
-    });
-  },
   save: function() {
     var that = this;
     if (!this.data.isSelected) {

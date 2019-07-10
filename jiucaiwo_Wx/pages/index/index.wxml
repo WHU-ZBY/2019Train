@@ -1,0 +1,49 @@
+<scroll-view scroll-y class="scrollPage">
+  <view class="UCenter-bg">
+    <image src="/images/logo.png" class="png" style="width:130px; height:130px "></image>
+    <view class="text-xxl">韭菜窝
+      <text class="text-df">v0.1</text>
+    </view>
+
+    <image src="http://i1.fuimg.com/691748/83388a096d28fab7.gif" mode="scaleToFill" class="gif-wave"></image>
+  </view>
+
+
+  <view class="padding flex flex-direction  margin-top-xl ">
+    <button class="cu-btn lines-black lg " wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo">授权韭菜窝</button>
+    <button class="cu-btn lines-black lg " wx:else bindtap='btn_login'>进入韭菜窝</button>
+
+    <navigator open-type="exit" target="miniProgram">
+      <button style="width:100%" class="cu-btn bg-black margin-top-lg lg ">离开韭菜窝</button>
+    </navigator>
+
+
+
+    <view class="cu-modal {{modalName=='notNwModal'?'show':''}}">
+      <view class="cu-dialog  ">
+        <view class="cu-bar bg-white justify-end">
+          <view class="content">请检查网络</view>
+        </view>
+        <view class="padding-xl">
+          韭菜窝,要在正常网络环境才能使用，请检查网络是否正常，再重新打开小程序
+        </view>
+        <view class="cu-bar bg-white">
+         <navigator style="width:100%" open-type="exit" target="miniProgram">
+        <view    class="action margin-0 flex-sub text-center  solid-left" bindtap="hideModal">我知道了</view>
+    </navigator>
+        
+        </view>
+
+      </view>
+    </view>
+
+
+
+
+
+
+
+  </view>
+
+
+</scroll-view>

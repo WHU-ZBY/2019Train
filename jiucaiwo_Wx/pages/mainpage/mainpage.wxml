@@ -1,4 +1,4 @@
-<scroll-view scroll-y bindscrolltolower="onReachBottom" class="DrawerPage {{modalName=='selectModal'?'show':''}}">
+<scroll-view scroll-y bindscroll="onPageScroll" scroll-top="{{NewsscrollTop}}" bindscrolltolower="onReachBottom" class="DrawerPage {{modalName=='selectModal'?'show':''}}">
   <!-- myOption -->
   <view wx:if="{{PageCur=='myOption'}}">
     <view class="bg-black shadow shadow-lg  radius indexFrame">
@@ -23,7 +23,7 @@
           <view class="text-xl ">
             {{ hsstockIndexs[0].price}}
           </view>
-          <view class="  grid flex  ">
+          <view class="  grid flex text-sm  ">
             <view class="  flex-twice padding-sm {{hsstockIndexs[0].changePrice>0?'text-red':'text-green'}}">{{hsstockIndexs[0].changePrice}}</view>
             <view class=" flex-twice padding-sm {{hsstockIndexs[0].present>0?'text-red':'text-green'}}">{{hsstockIndexs[0].present}}% </view>
 
@@ -33,7 +33,7 @@
           <view class="text-xl ">
             {{ ggstockIndexs[0].price}}
           </view>
-          <view class="  grid flex  ">
+          <view class="  grid flex text-sm  ">
             <view class="  flex-twice padding-sm {{ggstockIndexs[0].changePrice>0?'text-red':'text-green'}}">{{ggstockIndexs[0].changePrice}} </view>
             <view class=" flex-twice padding-sm {{ggstockIndexs[0].present>0?'text-red':'text-green'}}">{{ggstockIndexs[0].present}}% </view>
 
@@ -43,7 +43,7 @@
           <view class="text-xl ">
             {{ mgstockIndexs[0].price}}
           </view>
-          <view class="  grid flex  ">
+          <view class="  grid flex  text-sm ">
             <view class="  flex-twice padding-sm {{mgstockIndexs[0].changePrice>0?'text-red':'text-green'}}">{{mgstockIndexs[0].changePrice}}</view>
             <view class=" flex-twice padding-sm {{mgstockIndexs[0].present>0?'text-red':'text-green'}}">{{mgstockIndexs[0].present}}% </view>
 
@@ -186,7 +186,8 @@
         </view>
       </view>
     </view>
-
+          <view class="goTop" hidden='{{!showGoTop}}'  bindtap="goTop">回到顶部</view>
+    <view class="cu-load bg-black loading"></view>
 
 
 
@@ -208,9 +209,12 @@
         <view slot="content">消息</view>
       </cu-custom>
     </view>
+    <view class = "text-center margin-top-xl" wx:if="{{messagesData.num==0}}">
+     <text class="cuIcon-emoji xxl text-black"></text><text class="text-xxl text-black text-bold"> 暂无消息~ </text>
+    </view>
     <block wx:for="{{messagesData}}" wx:key="messagesData" wx:for-item="message">
 
-      <view class="cu-timeline ">
+      <view wx:if="{{index!='num'}}"  class="cu-timeline ">
         <view class="cu-time  ">{{message[0].date}}</view>
 
         <block wx:for="{{message}}" wx:key="message" wx:for-item="content">
@@ -256,7 +260,7 @@
             </view>
 
           </view>
-          <image src="http://i2.tiimg.com/691748/83388a096d28fab7.gif" mode="scaleToFill" class="gif-wave"></image>
+          <image src="http://i1.fuimg.com/691748/83388a096d28fab7.gif" mode="scaleToFill" class="gif-wave"></image>
         </view>
         <view class=" text-bold text-center">
           <text class="text-xxl">韭菜窝</text>
@@ -364,4 +368,5 @@
     </block>
 
   </view>
+
 </scroll-view>

@@ -8,10 +8,11 @@ Page({
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-
+    modalName:null,
   },
   //事件处理函数
   btn_login: function() {
+
     var that = this;
     console.log(app.globalData.openid)
     wx.request({
@@ -21,10 +22,12 @@ Page({
       }
     })
     app.globalData.userInfo = this.data.userInfo;
+    app.globalData.inIndexPage = false;
 
     wx.navigateTo({
       url: '../mainpage/mainpage'
     })
+
   },
 
   onLoad: function() {
@@ -37,7 +40,7 @@ Page({
     // })
 
 
-
+    
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -65,6 +68,7 @@ Page({
         }
       })
     }
+    setTimeout(this.checkNetWork, 1000);
   },
   getUserInfo: function(e) {
     console.log(e)
@@ -74,5 +78,23 @@ Page({
       hasUserInfo: true
     })
   },
+  checkNetWork:function(){
+    if (app.globalData.networkType=="none"){
+        this.setData({
+          modalName:'notNwModal'
+        })
+    } else if (app.globalData.networkType != null && this.data.modalName =="notNwModal"){
+      this.setData({
+        modalName: null,
+      })
+      wx.navigateBack({
+        
+      })
+    }
 
+    setTimeout(this.checkNetWork, 1000);
+  },
+  onShow:function(){
+    app.globalData.inIndexPage = true;
+  }
 })

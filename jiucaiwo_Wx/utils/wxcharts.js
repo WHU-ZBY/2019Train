@@ -811,7 +811,7 @@ function drawPointText(points, series, config, context) {
 
     context.beginPath();
     context.setFontSize(config.fontSize);
-    context.setFillStyle('#666666');
+    context.setFillStyle('#ffffff');
     points.forEach(function (item, index) {
         if (item !== null) {
             var formatVal = series.format ? series.format(data[index]) : data[index];
@@ -827,7 +827,7 @@ function drawRadarLabel(angleList, radius, centerPosition, opts, config, context
     radius += config.radarLabelTextMargin;
     context.beginPath();
     context.setFontSize(config.fontSize);
-    context.setFillStyle(radarOption.labelColor || '#666666');
+  context.setFillStyle(radarOption.labelColor || '#ffffff');
     angleList.forEach(function (angle, index) {
         var pos = {
             x: radius * Math.cos(angle),
@@ -937,7 +937,7 @@ function drawPieText(series, opts, config, context, radius, center) {
         context.closePath();
         context.fill();
         context.beginPath();
-        context.setFillStyle('#666666');
+      context.setFillStyle('#ffffff');
         context.fillText(item.text, textStartX, textPosition.y + 3);
         context.closePath();
         context.stroke();
@@ -1331,7 +1331,7 @@ function drawXAxis(categories, opts, config, context) {
     if (config._xAxisTextAngle_ === 0) {
         context.beginPath();
         context.setFontSize(config.fontSize);
-        context.setFillStyle(opts.xAxis.fontColor || '#666666');
+      context.setFillStyle(opts.xAxis.fontColor || '#ffffff');
         categories.forEach(function (item, index) {
             var offset = eachSpacing / 2 - measureText(item) / 2;
             context.fillText(item, xAxisPoints[index] + offset, startY + config.fontSize + 5);
@@ -1343,7 +1343,7 @@ function drawXAxis(categories, opts, config, context) {
             context.save();
             context.beginPath();
             context.setFontSize(config.fontSize);
-            context.setFillStyle(opts.xAxis.fontColor || '#666666');
+            context.setFillStyle(opts.xAxis.fontColor || '#ffffff');
             var textWidth = measureText(item);
             var offset = eachSpacing / 2 - textWidth;
 
@@ -1418,7 +1418,7 @@ function drawYAxis(series, opts, config, context) {
     context.stroke();
     context.beginPath();
     context.setFontSize(config.fontSize);
-    context.setFillStyle(opts.yAxis.fontColor || '#666666');
+    context.setFillStyle(opts.yAxis.fontColor || '#ffffff');
     rangesFormat.forEach(function (item, index) {
         var pos = points[index] ? points[index] : endY;
         context.fillText(item, config.padding + config.yAxisTitleWidth, pos + config.fontSize / 2);

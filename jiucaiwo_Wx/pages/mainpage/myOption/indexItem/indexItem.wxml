@@ -12,7 +12,7 @@
     <view class="text-lg" > {{item.price}}</view>
     </view>
     <view class=" text-lg basis-xs  text-left   {{item.present>0?'text-red':'text-green'}}">{{item.present}}%</view>
-    <view class=" text-lg  basis-xs  text-left  {{item.forecast-item.price>0?'text-red':'text-green'}}">{{item.forecast}}</view>
+    <view wx:if="{{item.forecast>0}}" class=" text-lg  basis-xs  text-left  {{item.forecast-item.price>0?'text-red':'text-green'}}">{{item.forecast}}</view> <view wx:else><text class="text-sm">计算中....</text></view>
   </view>
 
 </template>
