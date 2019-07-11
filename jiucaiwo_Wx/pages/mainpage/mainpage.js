@@ -583,6 +583,7 @@ Page({
       success(res) {
         console.log(res.data);
         var num = 0;
+        that.data.unreadNum = 0;
         for (let key in res.data) {
           num++;
           let ekey = res.data[key].date;

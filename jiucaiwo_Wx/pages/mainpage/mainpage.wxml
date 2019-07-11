@@ -352,7 +352,7 @@
       <view class='cuIcon-cu-image'>
         <image src="/images/tabbar/myPage{{PageCur=='myPage'?'_cur':''}}.png"></image>
       </view>
-      <view class="{{PageCur=='myPage'?'text-white':'text-gray'}}">设置</view>
+      <view class="{{PageCur=='myPage'?'text-white':'text-gray'}}">我的</view>
     </view>
   </view>
 </scroll-view>
