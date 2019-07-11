@@ -1,0 +1,99 @@
+<!--作者：张步云-->
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.whu.data.mapper.TeamMapper">
+    <select id="getShareByShareNum" resultType="com.whu.data.pojo.Share">
+        select * from shares where shareNum=#{shareNum}
+    </select>
+
+    <select id="getSaveShareByUserName" resultType="com.whu.data.pojo.Share">
+        select  * from saveShare where username=#{username}
+    </select>
+    <insert id="registerUser" parameterType="com.whu.data.pojo.User"
+            useGeneratedKeys="true" keyProperty="username">
+        insert into users(username) value (#{username})
+    </insert>
+
+    <insert id="addSaveShare" parameterType="com.whu.data.pojo.SaveShare">
+        insert into saveshare(username,shareNum) value (#{username},#{sharenum})
+    </insert>
+
+    <select id="getUserByName" resultType="com.whu.data.pojo.User">
+        select * from  users where username=#{username}
+    </select>
+    <delete id="deleteSaveShare" >
+      delete  from  saveShare where  username=#{username} and shareNum=#{shareNum}
+    </delete>
+
+    <select id="getSharesByShareName" resultType="com.whu.data.pojo.Share">
+        select * from  shares  where shareName  like CONCAT('%',#{sharename},'%')
+        or shareNum like CONCAT(#{sharename},'%') limit 20
+
+
+    </select>
+    <select id="getMessageList" resultType="com.whu.data.pojo.Message">
+        select * from message where username=#{username}
+    </select>
+
+    <insert id="sendSuggestion" parameterType="com.whu.data.pojo.suggestion">
+        insert into suggestion(username, content)
+        values (#{username},#{content})
+    </insert>
+    <!--需要解决重复预测的问题-->
+    <insert id="insertForecastInfo" parameterType="com.whu.data.pojo.ForecastInfo"
+            useGeneratedKeys="true" keyProperty="sharenum">
+        insert into forecast(sharenum,closeprice)
+        values (#{sharenum},#{closeprice})
+        ON DUPLICATE KEY UPDATE closeprice=values (closeprice)
+    </insert>
+    
+    <insert id="setShareIsPrint" parameterType="com.whu.data.pojo.IsPrintData"
+            useGeneratedKeys="true" keyProperty="sharenum">
+        insert into isprintdata(sharenum,isPrint)
+        values (#{sharenum},#{isPrint})
+         ON DUPLICATE KEY UPDATE isPrint=values(isPrint)
+    </insert>
+    
+    <update id="changeIsReadByUserName" parameterType="com.whu.data.pojo.Message">
+        update message set isread = 1 where username=#{username}
+    </update>
+    <update id="clearDBIsPrint" parameterType="com.whu.data.pojo.IsPrintData">
+        update isprintdata set isPrint = 0
+    </update>
+    <select id="getForecastInfoByShareNum" resultType="com.whu.data.pojo.ForecastInfo">
+        select * from forecast where sharenum=#{sharenum}
+    </select>
+    
+    
+    <insert id="insertMessageIntoMysql" parameterType="com.whu.data.pojo.Message">
+        insert into  message(username,sharenum,sharename,market,content,date,isread)
+        values (#{username},#{sharenum},#{sharename},#{market},#{content},#{date},#{isread})
+    </insert>
+    <select id="getClosePriceFromMysql" resultType="float">
+        select closeprice from forecast where  sharenum=#{sharenum}
+    </select>
+    <select id="getShareIsPrint" resultType="int">
+        select isPrint from isprintdata where sharenum=#{sharenum}
+    </select>
+
+    <select id="getAllSaveShareList" resultType="String">
+        select sharenum from saveshare
+    </select>
+
+    <select id="getUserSaveShareForecastList" resultType="String">
+        select sharenum from saveshare where username=#{username}
+    </select>
+
+    <select id="getNowPriceByShareNum" resultType="com.whu.data.pojo.forecast">
+        select * from forecast where sharenum=#{sharenum}
+    </select>
+
+    <select id="getAllUsers" resultType="com.whu.data.pojo.User">
+        select * from users
+    </select>
+
+</mapper>
