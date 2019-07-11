@@ -1,3 +1,4 @@
+// 作者：刘锦福
 // pages/newsPage/newsPage.js
 var app = getApp();
 

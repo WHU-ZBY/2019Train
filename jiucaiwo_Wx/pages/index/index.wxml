@@ -1,3 +1,4 @@
+<!-- 作者：刘锦福 -->
 <scroll-view scroll-y class="scrollPage">
   <view class="UCenter-bg">
     <image src="/images/logo.png" class="png" style="width:150px; height:150px "></image>

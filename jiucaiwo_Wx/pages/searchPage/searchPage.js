@@ -1,3 +1,4 @@
+// 作者：刘锦福
 // pages/searchPage/searchPage.js\
 const app = getApp();
 Page({

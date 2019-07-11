@@ -1,3 +1,4 @@
+<!-- 作者：刘锦福 -->
 <!--pages/mainpage/shareDetail/shareDetail.wxml-->
 <view class="imageBg1">
   <cu-custom class="text-white" bgColor="imageBg1" isBack="{{true}}">

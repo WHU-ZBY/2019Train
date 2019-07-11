@@ -1,3 +1,4 @@
+/* 作者：刘锦福 */
 /* pages/newsPage/newsPage.wxss */
 /**基础风格样式**/
 @import '/towxml/style/main.wxss';

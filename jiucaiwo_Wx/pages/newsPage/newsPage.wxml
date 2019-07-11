@@ -1,4 +1,4 @@
-
+<!-- 作者：刘锦福 -->
 <cu-custom class="text-white" bgColor="imageBg1" isBack="{{true}}">
   <view slot="backText">返回</view>
 </cu-custom>

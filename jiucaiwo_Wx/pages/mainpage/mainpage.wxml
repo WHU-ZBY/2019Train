@@ -1,3 +1,4 @@
+<!-- 作者：刘锦福 -->
 <scroll-view scroll-y bindscroll="onPageScroll" scroll-top="{{NewsscrollTop}}" bindscrolltolower="onReachBottom" class="DrawerPage {{modalName=='selectModal'?'show':''}}">
   <!-- myOption -->
   <view wx:if="{{PageCur=='myOption'}}">

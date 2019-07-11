@@ -1,3 +1,4 @@
+// 作者：刘锦福
 // pages/mainpage/shareDetail/shareDetail.js
 var wxCharts = require("../../utils/wxcharts.js");
 var daylineChart = null;

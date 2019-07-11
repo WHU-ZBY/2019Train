@@ -1,3 +1,4 @@
+//作者：刘锦福
 // pages/mainpage/myOption/indexItem/indexItem.js
 Page({
 
