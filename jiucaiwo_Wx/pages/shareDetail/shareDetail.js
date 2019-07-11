@@ -25,17 +25,21 @@ Page({
     present: "",
     forecast: "",
     dayData: [],
-    daySP: []
+    daySP: [],
+    weekDay:""
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    var mydate = new Date();
+    var myddy = mydate.getDay();
 
     this.setData({
       num: options.num,
       market: options.market,
-      isSelected: options.isSelected == 'true' ? true : options.isSelected == 'false' ? false:''
+      isSelected: options.isSelected == 'true' ? true : options.isSelected == 'false' ? false:'',
+      weekDay:myddy
     })
     if (this.data.isSelected) {
       this.setData({
@@ -207,13 +211,14 @@ Page({
                     that.data.daySP = that.data.daySP.concat(that.data.dayData[j][2]);
                     that.data.dataNum = that.data.dataNum.concat(that.data.dayData[j][0].substr(that.data.dayData[j][0].length - 3, that.data.dayData[j][0].length))
                   }
-                  that.data.dataNum = that.data.dataNum.concat("明天");
+                  var nextTime = (that.data.weekDay == 5) || (that.data.weekDay == 6) ? "下周一" : "明天"
+                  that.data.dataNum = that.data.dataNum.concat(nextTime);
                   that.data.dataNum = that.data.dataNum.concat("");
                   that.setData({
                     daySP: that.data.daySP,
                     dataNum: that.data.dataNum
                   })
-                
+                  
                   yuelineChart = new wxCharts({ //当月用电折线图配置
                     canvasId: 'yueEle',
                     type: 'line',
@@ -245,8 +250,8 @@ Page({
                       format: function (val) {
                         return val.toFixed(2);
                       },
-                      max: that.data.max * 1.1,
-                      min: that.data.min * 0.8
+                      max: that.data.max * 1.1 > that.data.forecast * 1.1 ? that.data.max * 1.1 : that.data.forecast * 1.1,
+                      min: that.data.min * 0.8 < that.data.forecast * 0.8 ? that.data.min * 0.8 : that.data.forecast * 0.8 ,
                     },
                     width: windowWidth*1.1,
                     height: 200,

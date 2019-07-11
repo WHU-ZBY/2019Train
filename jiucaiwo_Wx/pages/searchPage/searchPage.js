@@ -30,33 +30,35 @@ Page({
     })
   },
   searchShare: function() {
-    var that = this;
-    var url = "http://106.15.182.82:8080/getSharesByShareName?sharename=" + this.data.inputValue;
-    wx.request({
-      url: url,
-      //仅为示例，并非真实的接口地址
+    if(this.data.inputValue!=null){
+      var that = this;
+      var url = "http://106.15.182.82:8080/getSharesByShareName?sharename=" + this.data.inputValue;
+      wx.request({
+        url: url,
+        //仅为示例，并非真实的接口地址
 
-      header: {
-        'content-type': 'text/json' // 默认值
-      },
-      success(res) {
-        console.log(res.data);
-        that.data.shareItems = res.data;
+        header: {
+          'content-type': 'text/json' // 默认值
+        },
+        success(res) {
+          console.log(res.data);
+          that.data.shareItems = res.data;
 
-        for (var i = 0; i < that.data.shareItems.length; i++) {
-          that.data.shareItems[i].isSelected = false;
-          that.data.shareItems[i].index = i;
-          for (var j = 0; j < app.globalData.mySelect.length; j++) {
-            if (that.data.shareItems[i].shareNum == app.globalData.mySelect[j].shareNum) {
-              that.data.shareItems[i].isSelected = true;
+          for (var i = 0; i < that.data.shareItems.length; i++) {
+            that.data.shareItems[i].isSelected = false;
+            that.data.shareItems[i].index = i;
+            for (var j = 0; j < app.globalData.mySelect.length; j++) {
+              if (that.data.shareItems[i].shareNum == app.globalData.mySelect[j].shareNum) {
+                that.data.shareItems[i].isSelected = true;
+              }
             }
           }
-        }
-        that.setData({
-          shareItems: that.data.shareItems
-        })
-      },
-    })
+          that.setData({
+            shareItems: that.data.shareItems
+          })
+        },
+      })
+    }
 
   },
 
@@ -96,26 +98,28 @@ Page({
   onShow: function() {
     var that = this;
 
-    wx.request({
-      url: 'http://106.15.182.82:8080/searchSaveShareByUserName?username=' + app.globalData.openid,
-      success(res) {
-        console.log(res.data);
-        app.globalData.mySelect = res.data;
-        for (var i = 0; i < that.data.shareItems.length; i++) {
-          that.data.shareItems[i].isSelected = false;
-          that.data.shareItems[i].index = i;
-          for (var j = 0; j < app.globalData.mySelect.length; j++) {
-            if (that.data.shareItems[i].shareNum == app.globalData.mySelect[j].shareNum) {
-              that.data.shareItems[i].isSelected = true;
+    if(this.data.shareItems!=null){
+      wx.request({
+        url: 'http://106.15.182.82:8080/searchSaveShareByUserName?username=' + app.globalData.openid,
+        success(res) {
+          console.log(res.data);
+          app.globalData.mySelect = res.data;
+          for (var i = 0; i < that.data.shareItems.length; i++) {
+            that.data.shareItems[i].isSelected = false;
+            that.data.shareItems[i].index = i;
+            for (var j = 0; j < app.globalData.mySelect.length; j++) {
+              if (that.data.shareItems[i].shareNum == app.globalData.mySelect[j].shareNum) {
+                that.data.shareItems[i].isSelected = true;
+              }
             }
           }
+          that.setData({
+            shareItems: that.data.shareItems
+          })
         }
-        that.setData({
-          shareItems:that.data.shareItems
-        })
-      }
-    })
-  
+      })
+
+    }
   },
 
   /**
