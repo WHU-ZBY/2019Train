@@ -31,7 +31,7 @@
         <view class="  text-white  share-price ">
           <text class="text-df">股票今日当前价: </text>
           <view class="cu-tag line-white sm">{{market=='gb_'?'$':market=='hk'?'HKD':'￥'}}</view> {{price}}
-          <text class="text-df">\n预测明日收盘价: </text>
+          <text class="text-df">\n预测{{(weekDay==5)||(weekDay==6)?'下周一':'明天'}}收盘价: </text>
           <view class="cu-tag line-white sm">{{market=='gb_'?'$':market=='hk'?'HKD':'￥'}}</view> {{forecast}}</view>
       </view>
 
