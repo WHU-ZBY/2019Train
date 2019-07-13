@@ -1,4 +1,4 @@
-// 作者：刘锦福
+// 作者：刘锦福 
 // pages/searchPage/searchPage.js\
 const app = getApp();
 Page({
@@ -14,7 +14,7 @@ Page({
   onLoad: function(options) {
 
   },
-  getInput: function(e) {
+  getInput: function(e) {  //获取搜索框输入
     this.setData({
       inputValue: e.detail.value
     })
@@ -22,7 +22,7 @@ Page({
   onReady: function() {
 
   },
-  NavtoShare: function(e) {
+  NavtoShare: function(e) {  //跳到股票详情页面
     wx.navigateTo({
       url: '../shareDetail/shareDetail?market=' + e.currentTarget.dataset.cur[0] + "&num=" + e.currentTarget.dataset.cur[1] + "&isSelected=" + e.currentTarget.dataset.cur[2],
       success: function(res) {},
@@ -30,7 +30,7 @@ Page({
       complete: function(res) {},
     })
   },
-  searchShare: function() {
+  searchShare: function() {  //搜索
     if(this.data.inputValue!=null){
       var that = this;
       var url = "http://106.15.182.82:8080/getSharesByShareName?sharename=" + this.data.inputValue;
@@ -63,7 +63,7 @@ Page({
 
   },
 
-  addOrDelShare: function(e) {
+  addOrDelShare: function(e) {  //添加或取消自选
     var that = this;
     var isSelected = e.currentTarget.dataset.cur[0];
     var num = e.currentTarget.dataset.cur[1];

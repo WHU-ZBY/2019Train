@@ -80,7 +80,7 @@ Page({
 
   },
 
-  NavChange(e) {
+  NavChange(e) {   //换页（下栏）
     var that = this;
     if (e.currentTarget.dataset.cur == "messagesPage") {
       wx.request({
@@ -121,7 +121,7 @@ Page({
     this.getNewsTitle();
   },
 
-  getNewsTitle: function() {
+  getNewsTitle: function() { //获取新闻列表
     var that = this;
     var newsUrl = "http://api.dagoogle.cn/news/nlist?cid=4&psize=1";
     wx.request({
@@ -140,7 +140,7 @@ Page({
       }
     })
   },
-  refreshIndex: function() {
+  refreshIndex: function() { //更新指数
     var that = this
     var hsurl = 'https://hq.sinajs.cn/list='
     var ggurl = 'https://hq.sinajs.cn/list='
@@ -295,7 +295,7 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  refreshItem: function() {
+  refreshItem: function() {  //更新股票列表
 
 
     var that = this
@@ -413,14 +413,14 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  marketSelect: function(e) {
+  marketSelect: function(e) {  //换市场（行情资讯页)
     this.setData({
       TabCur: e.currentTarget.dataset.id,
     })
 
   },
 
-  NavtoNewsPage: function(e) {
+  NavtoNewsPage: function(e) {  //跳到新闻详情页
     wx.navigateTo({
       url: '../newsPage/newsPage?newsaid=' + this.data.newsTitles[e.currentTarget.dataset.cur].aid,
       success: function(res) {},
@@ -428,7 +428,7 @@ Page({
       complete: function(res) {},
     })
   },
-  NavtoShare: function(e) {
+  NavtoShare: function(e) {  //跳到股票详情
     console.log(e);
     wx.navigateTo({
       url: '../shareDetail/shareDetail?market=' + e.currentTarget.dataset.cur[0] + "&num=" + e.currentTarget.dataset.cur[1] + "&isSelected=" + e.currentTarget.dataset.cur[2],
@@ -437,18 +437,18 @@ Page({
       complete: function(res) {},
     })
   },
-  getInput: function(e) {
+  getInput: function(e) {  //获取搜索输入
     this.setData({
       inputValue: e.detail.value
     })
   },
-  getFbIput: function(e) {
+  getFbIput: function(e) {  //获取意见反馈输入
     this.setData({
       fbInput: e.detail.value
     })
   },
 
-  showModal: function(e) {
+  showModal: function(e) {  //展示模态框
     if (this.data.modalName != null) {
       this.setData({
         modalName: null
@@ -459,7 +459,7 @@ Page({
       })
     }
   },
-  hideModal: function(e) {
+  hideModal: function(e) {  //隐藏模态框
     var that = this;
     switch (this.data.modalName) {
       case 'feedbackModal':
@@ -505,7 +505,7 @@ Page({
     })
 
   },
-  addOrDelShare: function(e) {
+  addOrDelShare: function(e) {  //添加或取消自选
     var that = this;
     var isSelected = e.currentTarget.dataset.cur[0];
     var num = e.currentTarget.dataset.cur[1];
@@ -567,13 +567,13 @@ Page({
     }
   },
   // 回到顶部
-  goTop: function (e) {
+  goTop: function (e) {  //回到顶部
    this.setData({
      NewsscrollTop:0
    })
   },
 
-  getMessages: function() {
+  getMessages: function() {  //拿到消息列表
     var that = this;
     let map = {}; // 处理过后的数据对象
     let temps = []; // 临时变量
@@ -648,7 +648,7 @@ Page({
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {
+  onReachBottom: function() { 
     console.log(this.data.newspage);
     this.setData({
       newspage: this.data.newspage + 1

@@ -1,5 +1,5 @@
 //app.js
-//app.js
+//作者：刘锦福
 const Towxml = require('/towxml/main');    //引入towxml库
 
 
@@ -57,7 +57,7 @@ App({
       }
     })
   },
-  getNwType:function(){
+  getNwType:function(){  //检查网络状态
     var that =this;
     wx.getNetworkType({
       success(res) {

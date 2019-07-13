@@ -1,4 +1,4 @@
-// 作者：刘锦福
+// 作者：刘锦福  张步云
 // pages/mainpage/shareDetail/shareDetail.js
 var wxCharts = require("../../utils/wxcharts.js");
 var daylineChart = null;
@@ -14,7 +14,7 @@ Page({
     loadModal:true,
     imageSrc: null,
     dataNum: [],
-    saveBtnContent: '+ 自选',
+    saveBtnContent: '+ 自选',  
     isSelected: false,
     market: "",
     num: "",
@@ -50,7 +50,7 @@ Page({
     this.getShareInf();
 
   },
-  getShareInf: function() {
+  getShareInf: function() {  //获取股票详情并绘制曲线
     var that = this;
     wx.request({
       url: "http://hq.sinajs.cn/list=" + this.data.market + this.data.num.toLowerCase(),
@@ -288,7 +288,7 @@ Page({
     });
   },
 
-  save: function() {
+  save: function() {  //添加或取消自选
     var that = this;
     if (!this.data.isSelected) {
       wx.request({

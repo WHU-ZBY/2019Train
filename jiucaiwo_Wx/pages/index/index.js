@@ -79,7 +79,7 @@ Page({
       hasUserInfo: true
     })
   },
-  checkNetWork:function(){
+  checkNetWork:function(){ //检查网络
     if (app.globalData.networkType=="none"){
         this.setData({
           modalName:'notNwModal'

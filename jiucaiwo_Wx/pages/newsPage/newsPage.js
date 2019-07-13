@@ -25,7 +25,7 @@ Page({
     this.getNewsMes()
   },
 
-  getNewsMes: function () {
+  getNewsMes: function () {  //拿到新闻详情
     app.to
     var that = this;
 

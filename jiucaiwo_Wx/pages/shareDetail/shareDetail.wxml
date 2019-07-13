@@ -1,4 +1,4 @@
-<!-- 作者：刘锦福 -->
+<!-- 作者：刘锦福  张步云-->
 <!--pages/mainpage/shareDetail/shareDetail.wxml-->
 <view class="imageBg1">
   <cu-custom class="text-white" bgColor="imageBg1" isBack="{{true}}">
